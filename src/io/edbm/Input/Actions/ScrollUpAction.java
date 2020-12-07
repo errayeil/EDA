@@ -1,12 +1,12 @@
 package io.edbm.Input.Actions;
 
-import io.edbm.UI.BMWindow;
+import io.edbm.UI.EDAWindow;
 
 public class ScrollUpAction implements ActionImpl {
     
-    private BMWindow appWindow;
+    private EDAWindow appWindow;
     
-    public ScrollUpAction(BMWindow appWindow) {
+    public ScrollUpAction( EDAWindow appWindow) {
         this.appWindow = appWindow;
     }
     

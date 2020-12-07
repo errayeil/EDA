@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="com.opencsv:opencsv:5.3" level="project" />
+    <orderEntry type="library" exported="" name="net.java.jinput:applet:2.0.9" level="project" />
+    <orderEntry type="library" exported="" name="net.java.jinput:awt-plugin:2.0.9" level="project" />
+    <orderEntry type="library" exported="" name="net.java.jinput:coreapi:2.0.9" level="project" />
+    <orderEntry type="library" exported="" name="org.jsoup:jsoup:1.13.1" level="project" />
+    <orderEntry type="library" exported="" name="io.sentry:sentry:3.1.0" level="project" />
+    <orderEntry type="library" name="SimpleNativeHooks_0_0_4" level="project" />
+    <orderEntry type="library" name="net.java.jinput:jinput:2.0.9" level="project" />
+    <orderEntry type="library" name="net.java.jinput:linux-plugin:2.0.9" level="project" />
+    <orderEntry type="library" name="net.java.jinput:osx-plugin:2.0.9" level="project" />
+    <orderEntry type="library" name="net.java.jinput:windows-plugin:2.0.9" level="project" />
+    <orderEntry type="library" name="net.java.jinput:wintab-plugin:2.0.9" level="project" />
+  </component>
+</module>

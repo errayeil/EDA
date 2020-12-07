@@ -1,14 +1,13 @@
 package io.edbm.Input.Actions;
 
-import io.edbm.UI.BMWindow;
-import net.java.games.input.Controller;
+import io.edbm.UI.EDAWindow;
 
 public class ScrollDownAction implements ActionImpl {
     
     public String actionName = "scrollTab";
     
     
-    public ScrollDownAction ( BMWindow appWindow ) {
+    public ScrollDownAction ( EDAWindow appWindow ) {
     
     }
     

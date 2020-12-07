@@ -6,16 +6,16 @@ import io.edbm.Input.Actions.PrevTabAction;
 import io.edbm.Input.Actions.ScrollDownAction;
 import io.edbm.Input.Actions.ScrollUpAction;
 import io.edbm.Input.Actions.SelectAction;
-import io.edbm.Input.Actions.VisibilityAction;
-import io.edbm.Input.controller.ControllerInputEvent;
-import io.edbm.Input.controller.ControllerInputListener;
-import io.edbm.Input.controller.ControllerPollerManager;
-import io.edbm.Input.controller.ControllerStateEvent;
-import io.edbm.Input.controller.ControllerStateListener;
+import io.edbm.Input.Actions.WindowVisibilityAction;
+import io.edbm.Input.Controller.ControllerInputEvent;
+import io.edbm.Input.Controller.ControllerInputListener;
+import io.edbm.Input.Controller.ControllerPollerManager;
+import io.edbm.Input.Controller.ControllerStateEvent;
+import io.edbm.Input.Controller.ControllerStateListener;
 import io.edbm.Input.Keyboard.NativeKeyListener;
-import io.edbm.UI.BMWindow;
-import io.edbm.utilities.InputUtils;
-import io.edbm.utilities.InputUtils.POVDirection;
+import io.edbm.UI.EDAWindow;
+import io.edbm.Utilities.InputUtils;
+import io.edbm.Utilities.InputUtils.POVDirection;
 import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.swing.SwingUtilities;
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
@@ -48,7 +47,7 @@ public class ActionDispatcher implements ControllerInputListener,
     /**
      *
      */
-    private volatile BMWindow appWindow;
+    private volatile EDAWindow appWindow;
     
     /**
      *
@@ -83,7 +82,9 @@ public class ActionDispatcher implements ControllerInputListener,
     /**
      *
      */
-    public ActionDispatcher ( final BMWindow window) {
+    public ActionDispatcher ( final EDAWindow window) {
+        
+        
         this.appWindow = window;
         this.actionsMap = new ConcurrentHashMap<>();
         this.inputBindsMap = new ConcurrentHashMap<>();
@@ -95,7 +96,7 @@ public class ActionDispatcher implements ControllerInputListener,
         actionsMap.put( "scrollDownAction", new ScrollDownAction( appWindow ) );
         actionsMap.put( "scrollUpAction", new ScrollUpAction( appWindow ) );
         actionsMap.put( "selectComponentAction", new SelectAction( appWindow) );
-        actionsMap.put( "visibilityWindowAction", new VisibilityAction(appWindow) );
+        actionsMap.put( "visibilityWindowAction", new WindowVisibilityAction( appWindow) );
         
         Controller[] controllers = env.getControllers();
         

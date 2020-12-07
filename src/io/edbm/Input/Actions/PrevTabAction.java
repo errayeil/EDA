@@ -1,19 +1,18 @@
 package io.edbm.Input.Actions;
 
-import io.edbm.UI.BMWindow;
-import net.java.games.input.Controller;
+import io.edbm.UI.EDAWindow;
 
 public class PrevTabAction implements ActionImpl {
     
     public String actionName = "prevTab";
     
-    private BMWindow appWindow;
+    private EDAWindow appWindow;
     
     /**
      *
      * @param appWindow
      */
-    public PrevTabAction( BMWindow appWindow ) {
+    public PrevTabAction( EDAWindow appWindow ) {
         this.appWindow = appWindow;
     }
     

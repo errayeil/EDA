@@ -1,11 +1,15 @@
 package io.edbm.Input.Actions;
 
-public class CreateBookmarkAction implements ActionImpl {
+/**
+ * @version HIP 2
+ * @since HIP 2
+ */
+public class BugReportAction implements ActionImpl {
     
     /**
      *
      */
-    public CreateBookmarkAction() {
+    public BugReportAction() {
     
     }
     
