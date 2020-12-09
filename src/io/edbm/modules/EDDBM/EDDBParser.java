@@ -1,9 +1,14 @@
 package io.edbm.modules.EDDBM;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonStreamParser;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import io.edbm.modules.EDDBM.POJO.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -70,24 +76,6 @@ public class EDDBParser {
     }
     
     /**
-     *
-     * @param stationName The name of the station to parse for.
-     */
-    public Results parseForStation(final String stationName) {
-    
-        return null;
-    }
-    
-    /**
-     *
-     * @param commodityName The name of the commodity to parse for.
-     */
-    public Results parseForCommodity(final String commodityName) {
-        
-        return null;
-    }
-    
-    /**
      * Creates and returns a new InputStreamReader for the JSONParser.
      *
      * @param strURL  The URL we are opening a connection too.
@@ -103,16 +91,29 @@ public class EDDBParser {
     
     /**
      *
-     * @param systemID
+     * @param systemName
      */
-    private void getBodiesFor(final String systemName) throws IOException {
+    public List<Body> parseBodiesFor(final String systemName) throws IOException {
         GZIPInputStream gStream = new GZIPInputStream( new URL( EDDBModuleManager.bodiesURL ).openStream() );
-        InputStreamReader strReader = new InputStreamReader( gStream );
+        InputStreamReader strReader = new InputStreamReader( new URL(EDDBModuleManager.JSON_factionsURL).openStream() );
+        JsonReader reader = new JsonReader( strReader );
         
-        JsonElement mainEle = new JsonParser().parse( strReader );
-        JsonArray array = mainEle.getAsJsonArray();
+        Gson gson = new GsonBuilder().serializeNulls().create();
         
         List<Body> bodies = new ArrayList<>();
+        
+        if (reader.peek() != JsonToken.BEGIN_ARRAY) {
+            reader.beginArray();
+        }
+        
+        while (reader.hasNext()) {
+
+        }
+        
+        System.out.println("Loop exited.");
+        
+        strReader.close();
+        return bodies;
     }
     
     /**
@@ -397,8 +398,7 @@ public class EDDBParser {
                     newFaction.is_player_faction = !obj.get( "is_player_faction" ).isJsonNull() ? obj.get( "is_player_faction" ).getAsBoolean() :
                             false;
                     newFaction.home_system_id = !obj.get( "home_system_id" ).isJsonNull() ? obj.get( "home_system_id" ).getAsInt() : -1;
-    
-    
+                    
                     if (!factions.contains( newFaction )) {
                         factions.add( newFaction );
                     }

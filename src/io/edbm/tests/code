@@ -1,0 +1,73 @@
+JsonElement mainEle = new JsonParser().parse( jReader );
+        JsonArray array = mainEle.getAsJsonArray();
+
+        List<Body> bodies = new ArrayList<>();
+
+        System.out.println("Array size : " + array.size());
+
+        for (JsonElement element : array) {
+            System.out.println("Searching");
+            Body body = new Body();
+            JsonObject obj = element.getAsJsonObject();
+
+            if (obj.get( "systemName" ).getAsString().equals( systemName )) {
+                body.id = !obj.get( "id" ).isJsonNull() ? obj.get( "id" ).getAsLong() : -1;
+                body.id64 = !obj.get( "id64" ).isJsonNull() ? obj.get( "id64" ).getAsLong() : -1;
+                body.bodyID = !obj.get( "bodyId" ).isJsonNull() ? obj.get( "bodyId" ).getAsInt() : -1;
+                body.name = !obj.get( "name" ).isJsonNull() ? obj.get( "name" ).getAsString() : NA;
+                body.type = !obj.get( "type" ).isJsonNull() ? obj.get( "type" ).getAsString() : NA;
+                body.subType = !obj.get( "subType" ).isJsonNull() ? obj.get( "subType" ).getAsString() : NA;
+                body.distanceToArrival = !obj.get( "distanceToArrival" ).isJsonNull() ? obj.get( "distanceToArrival").getAsLong() : -1;
+                body.isLandable = !obj.get( "isLandable" ).isJsonNull() ? obj.get( "isLandable" ).getAsBoolean() : false;
+                body.gravity = !obj.get( "gravity" ).isJsonNull() ? obj.get( "gravity" ).getAsDouble() : -1;
+                body.earthMasses = !obj.get( "earthMasses" ).isJsonNull() ? obj.get( "earthMasses" ).getAsDouble() : -1;
+                body.radius = !obj.get( "radius" ).isJsonNull() ? obj.get( "radius" ).getAsDouble() : -1;
+                body.surfaceTemperature = !obj.get( "surfaceTemperature" ).isJsonNull() ? obj.get( "surfaceTemperature" ).getAsInt() : -1;
+                body.surfacePressure = !obj.get( "surfacePressure" ).isJsonNull() ? obj.get( "surfacePressure" ).getAsDouble() : -1;
+                body.volcanismType = !obj.get( "volcanismType" ).isJsonNull() ? obj.get( "volcanismType" ).getAsString() : NA;
+                body.atmosphereType = !obj.get( "atmosphereType" ).isJsonNull() ? obj.get( "atmosphereType" ).getAsString() : NA;
+                body.terraformingState = !obj.get( "terraformingState" ).isJsonNull() ? obj.get( "terraformingState" ).getAsString() : NA;
+                body.orbitalPeriod = !obj.get( "orbitalPeriod" ).isJsonNull() ? obj.get( "orbitalPeriod" ).getAsDouble() : -1;
+                body.semiMajorAxis = !obj.get( "semiMajorAxis" ).isJsonNull() ? obj.get( "semiMajorAxis" ).getAsDouble() : -1;
+                body.orbitalEccentricity = !obj.get( "orbitalEccentricity" ).isJsonNull() ? obj.get( "orbitalEccentricity" ).getAsDouble() : -1;
+                body.orbitalInclination = !obj.get( "orbitalInclination" ).isJsonNull() ? obj.get( "orbitalInclination" ).getAsDouble() : -1;
+                body.argOfPeriapsis = !obj.get( "argOfPeriapsis" ).isJsonNull() ? obj.get( "argOfPeriapsis" ).getAsDouble() : -1;
+                body.rotationalPeriod = !obj.get( "rotationalPeriod" ).isJsonNull() ? obj.get( "rotationalPeriod" ).getAsDouble() : -1;
+                body.rotationalPeriodTidallyLocked = !obj.get( "rotationalPeriodTidallyLocked" ).isJsonNull() ? obj.get(
+                        "rotationalPeriodTidallyLocked" ).getAsBoolean() : false;
+                body.axialTilt = !obj.get( "axialTilt" ).isJsonNull() ? obj.get( "axialTilt" ).getAsDouble() : -1;
+                body.updateTime = !obj.get( "updateTime" ).isJsonNull() ? obj.get( "updateTime" ).getAsString() : NA;
+                body.systemId = !obj.get( "systemId" ).isJsonNull() ? obj.get( "systemId" ).getAsLong() : -1;
+                body.systemId64 = !obj.get( "systemId64" ).isJsonNull() ? obj.get( "systemId64" ).getAsLong() : -1;
+                body.systemName = !obj.get( "systemName" ).isJsonNull() ? obj.get( "systemName" ).getAsString() : NA;
+
+                if (!obj.get( "parents" ).isJsonNull()) {
+                    JsonObject parentObj = obj.getAsJsonObject("parents");
+                    Set<String> keys = parentObj.keySet();
+
+                    for (String key : keys) {
+                        body.parents.put( key, parentObj.get( key ).getAsInt() );
+                    }
+                }
+
+                if (!obj.get( "atmosphereComposition" ).isJsonNull()) {
+                    JsonObject compObj = obj.getAsJsonObject("atmosphereComposition");
+                    Set<String> keys = compObj.keySet();
+
+                    for (String key : keys) {
+                        body.atmosphereComp.put( key, compObj.get( key ).getAsDouble() );
+                    }
+                }
+
+                if (!obj.get( "solidComposition" ).isJsonNull()) {
+                    JsonObject solidObj = obj.getAsJsonObject("solidComposition");
+                    Set<String> keys = solidObj.keySet();
+
+                    for (String key : keys) {
+                        body.solidComp.put( key, solidObj.get( key ).getAsDouble() );
+                    }
+                }
+            }
+
+            bodies.add( body );
+        }

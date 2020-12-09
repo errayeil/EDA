@@ -5,6 +5,7 @@ import io.edbm.Input.Controller.ControllerPollerManager;
 import io.edbm.Input.Keyboard.NativeHook;
 import io.edbm.UI.EDAWindow;
 import io.edbm.modules.EDDBM.EDDBParser;
+import io.edbm.modules.EDDBM.POJO.Body;
 import io.edbm.modules.EDDBM.POJO.Faction;
 import io.edbm.modules.EDDBM.POJO.PopulatedSystem;
 import io.edbm.modules.EDDBM.POJO.Station;
@@ -103,35 +104,19 @@ public class Run {
     
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher( actionDispatcher );
         
+        EDDBParser parser = new EDDBParser();
+    
+        try {
+            parser.parseBodiesFor( "Sol" );
+        } catch ( IOException e ) {
+            e.printStackTrace();
+        }
+    
         SwingUtilities.invokeLater( () -> {
             appWindow.setSize( new Dimension( 1500, 900) );
             appWindow.setLocationRelativeTo( null );
             appWindow.setVisible( true );
         } );
-    
-        EDDBParser parser = new EDDBParser();
-        try {
-            List<PopulatedSystem> systems = parser.parseForSystem( "Sol" );
-            for (PopulatedSystem system : systems) {
-                System.out.println("System name : " + system.name);
-                System.out.println("System id : " +  system.id);
-                
-                if (system.name.equals( "Sol" )) {
-                    List<Station> stations = parser.getStationsForSystem( system.id );
-                    List<Faction> factions = parser.getFactionsForSystem( system.id );
-                    
-                    for (Station station : stations) {
-                        System.out.println("Station in sol : " + station.name);
-                    }
-                    
-                    for (Faction faction : factions) {
-                        System.out.println("Faction in sol :" + faction.name);
-                    }
-                }
-            }
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
     }
     
     /**

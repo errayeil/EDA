@@ -63,7 +63,7 @@ public class EDAButton extends JPanel {
     /**
      *
      */
-    private ArrayList<EDATabListener> listeners;
+    private final ArrayList<EDATabListener> listeners;
     
     /**
      *
@@ -139,6 +139,13 @@ public class EDAButton extends JPanel {
         super.paintComponent( g2d );
     }
     
+    /**
+     *
+     * @param g
+     * @param text
+     * @param rect
+     * @param font
+     */
     private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
         // Get the FontMetrics
         FontMetrics metrics = g.getFontMetrics(font);
@@ -149,9 +156,16 @@ public class EDAButton extends JPanel {
         // Set the font
         g.setFont(font);
         // Draw the String
-        g.drawString(text, x, y);
+        g.drawString(text, x, y - 3);
     }
     
+    /**
+     *
+     * @param g
+     * @param text
+     * @param rect
+     * @param font
+     */
     private void drawLoweredCenteredString(Graphics g, String text, Rectangle rect, Font font) {
         // Get the FontMetrics
         FontMetrics metrics = g.getFontMetrics(font);

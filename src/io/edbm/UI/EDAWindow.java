@@ -82,7 +82,7 @@ public class EDAWindow extends JDialog implements EDATabListener {
         windowPanel = new EDAWindowPanel();
         HMButton = new EDAButton( "", 40, 40 );
         BBMMButton = new EDAButton( "BMM" );
-        EMTMButton = new EDAButton( "EMTM");
+        EMTMButton = new EDAButton( "MTM");
         NSSMButton = new EDAButton( "NSSM" );
         GMMButton = new EDAButton( "GMM");
         SYMButton = new EDAButton( "SYM" );
@@ -92,7 +92,7 @@ public class EDAWindow extends JDialog implements EDATabListener {
         modulePanels = new HashMap<>();
         
         BBMMButton.setButtonSubText( "Bookmark management module" );
-        EMTMButton.setButtonSubText( "Engineering material tracker module" );
+        EMTMButton.setButtonSubText( "Material tracker module" );
         NSSMButton.setButtonSubText( "Nearby star system module" );
         GMMButton.setButtonSubText( "Galactic market module" );
         SYMButton.setButtonSubText( "Shipyard module" );
