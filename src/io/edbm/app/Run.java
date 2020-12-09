@@ -87,6 +87,10 @@ public class Run {
      *
      */
     private void init() {
+
+        Sentry.init(options -> {
+            options.setDsn("https://f2fa9b61a4de48e680342299516550bb@o291527.ingest.sentry.io/5545580");
+        });
         
         appWindow = new EDAWindow();
         actionDispatcher = new ActionDispatcher( appWindow );
@@ -103,14 +107,6 @@ public class Run {
         hook.start();
     
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher( actionDispatcher );
-        
-        EDDBParser parser = new EDDBParser();
-    
-        try {
-            parser.parseBodiesFor( "Sol" );
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
     
         SwingUtilities.invokeLater( () -> {
             appWindow.setSize( new Dimension( 1500, 900) );

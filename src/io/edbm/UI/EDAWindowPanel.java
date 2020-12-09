@@ -67,20 +67,25 @@ public class EDAWindowPanel extends JPanel {
         
        
     }
-    
+
+    /**
+     * Paints the panel to match the Elite:Dangerous in game UI.
+     * @param g
+     */
     @Override
     public void paintComponent( Graphics g) {
         Graphics2D g2d = (Graphics2D ) g;
-        drawWindowBackground( g2d );
-        drawWindowBorders( g2d );
-        drawWindowBackgroundRectangles( g2d );
+        drawBackground( g2d );
+        drawBorders( g2d );
+        drawBackgroundRectangles( g2d );
     }
     
     /**
-     *
+     * Draws the background of the panel to match ED's UI.
+     * TODO: Perfectly match ED in game UI.
      * @param g2d
      */
-    private void drawWindowBackground(Graphics2D g2d) {
+    private void drawBackground( Graphics2D g2d) {
         g2d.setColor( ThemeColors.WINDOW_BACKGROUND );
         g2d.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
@@ -91,10 +96,11 @@ public class EDAWindowPanel extends JPanel {
     }
     
     /**
-     *
+     * Draws the window and tab button bar borders.
+     * TODO: Perfectly match ED in game UI.
      * @param g2d
      */
-    private void drawWindowBorders(Graphics2D g2d) {
+    private void drawBorders( Graphics2D g2d) {
         g2d.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -116,10 +122,12 @@ public class EDAWindowPanel extends JPanel {
     }
     
     /**
-     *
+     * Draws the semi-transparent rectangles seen in the background of Elite:Dangerous
+     * in game UI's.
+     * TODO: Get rectangle spacing correct. Seems off at the moment.
      * @param g2d
      */
-    private void drawWindowBackgroundRectangles(Graphics2D g2d) {
+    private void drawBackgroundRectangles( Graphics2D g2d) {
         g2d.setColor( ThemeColors.WINDOW_BACKGROUND_RECTANGLES );
         g2d.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
@@ -134,13 +142,12 @@ public class EDAWindowPanel extends JPanel {
         
         
         for (int i = 0; i < rectangles; i++) {
-            g2d.fillRect( x, y , width, 3);
+            g2d.fillRect( x, y, width, 3 );
             y = y + spacing;
-            
-            if ( y >= 940) {
+
+            if ( y >= 940 ) {
                 break;
             }
         }
-        super.paintComponent( g2d );
     }
 }

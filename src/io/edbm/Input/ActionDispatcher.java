@@ -16,6 +16,7 @@ import io.edbm.Input.Keyboard.NativeKeyListener;
 import io.edbm.UI.EDAWindow;
 import io.edbm.Utilities.InputUtils;
 import io.edbm.Utilities.InputUtils.POVDirection;
+import io.sentry.Sentry;
 import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -101,13 +102,17 @@ public class ActionDispatcher implements ControllerInputListener,
         Controller[] controllers = env.getControllers();
         
         for (Controller c : controllers) {
-            if (c.getName().equals( "Stream Deck" )) {
-                System.out.println(c.getType());
-                Component[] cs = c.getComponents();
-                
-                for (Component comp : cs) {
-                    System.out.println(comp.getName());
+            if (c != null) {
+                if (c.getName().equals( "Stream Deck" )) {
+                    System.out.println(c.getType());
+                    Component[] cs = c.getComponents();
+
+                    for (Component comp : cs) {
+                        System.out.println(comp.getName());
+                    }
                 }
+            } else {
+                Sentry.captureMessage( "Controller is null. Operating System : " + System.getProperty( "os.name" ) );
             }
         }
         

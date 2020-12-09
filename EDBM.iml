@@ -13,11 +13,11 @@
     <orderEntry type="library" exported="" name="net.java.jinput:coreapi:2.0.9" level="project" />
     <orderEntry type="library" exported="" name="org.jsoup:jsoup:1.13.1" level="project" />
     <orderEntry type="library" exported="" name="io.sentry:sentry:3.1.0" level="project" />
-    <orderEntry type="library" name="SimpleNativeHooks_0_0_4" level="project" />
     <orderEntry type="library" name="net.java.jinput:jinput:2.0.9" level="project" />
     <orderEntry type="library" name="net.java.jinput:linux-plugin:2.0.9" level="project" />
     <orderEntry type="library" name="net.java.jinput:osx-plugin:2.0.9" level="project" />
     <orderEntry type="library" name="net.java.jinput:windows-plugin:2.0.9" level="project" />
     <orderEntry type="library" name="net.java.jinput:wintab-plugin:2.0.9" level="project" />
+    <orderEntry type="library" name="SimpleNativeHooks_0_0_4" level="project" />
   </component>
 </module>

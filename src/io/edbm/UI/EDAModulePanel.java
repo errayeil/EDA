@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
+ * Custom JPanel designed to contain module panels.
  *
  * @author Steven Frizell
  * @version HIP 2
@@ -14,7 +15,7 @@ import javax.swing.JPanel;
 public class EDAModulePanel extends JPanel {
     
     /**
-     *
+     * The background opacity.
      */
     private float backgroundAlpha;
     

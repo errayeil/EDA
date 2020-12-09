@@ -14,83 +14,83 @@ import javax.swing.SwingUtilities;
  * @since HIP 2
  */
 public class EDAWindow extends JDialog implements EDATabListener {
-    
+
     /**
      *
      */
     private int selectedIndex;
-    
+
     /**
      *
      */
     private EDAButton selected;
-    
+
     /**
      * Button to select the Home module panel.
      */
     private EDAButton HMButton;
-    
+
     /**
      * Button to select the Better Bookmark management module panel.
      */
     private EDAButton BBMMButton;
-    
+
     /**
      * Button to select the Engineering material tracker module panel.
      */
     private EDAButton EMTMButton;
-    
+
     /**
      * Button to select the Nearby star system module panel.
      */
     private EDAButton NSSMButton;
-    
+
     /**
      * Button to select the Galactic market module panel.
      */
     private EDAButton GMMButton;
-    
+
     /**
      * Button to select the Ship yard module panel.
      */
     private EDAButton SYMButton;
-    
+
     /**
      * Button to select the Web page viewer module panel.
      */
     private EDAButton WPVMButton;
-    
+
     /**
      * Button to select the EDDB Query module.
      */
     private EDAButton EDDBMButton;
-    
+
     /**
      * The panel that displays the UI background graphics.
      */
     private EDAWindowPanel windowPanel;
-    
+
     /**
      * Easily retrieve module panels assigned to its EDAButton.
      */
-    private Map<EDAButton, EDAWindowPanel> modulePanels;
-    
+    private Map< EDAButton, EDAWindowPanel > modulePanels;
+
     /**
      *
      */
-    public EDAWindow () {
-        windowPanel = new EDAWindowPanel();
+    public EDAWindow( ) {
+        windowPanel = new EDAWindowPanel( );
         HMButton = new EDAButton( "", 40, 40 );
         BBMMButton = new EDAButton( "BMM" );
-        EMTMButton = new EDAButton( "MTM");
+        EMTMButton = new EDAButton( "MTM" );
         NSSMButton = new EDAButton( "NSSM" );
-        GMMButton = new EDAButton( "GMM");
+        GMMButton = new EDAButton( "GMM" );
         SYMButton = new EDAButton( "SYM" );
         WPVMButton = new EDAButton( "WPVM" );
         EDDBMButton = new EDAButton( "EDDBM" );
-        
-        modulePanels = new HashMap<>();
-        
+
+        modulePanels = new HashMap<>( );
+
         BBMMButton.setButtonSubText( "Bookmark management module" );
         EMTMButton.setButtonSubText( "Material tracker module" );
         NSSMButton.setButtonSubText( "Nearby star system module" );
@@ -98,7 +98,7 @@ public class EDAWindow extends JDialog implements EDATabListener {
         SYMButton.setButtonSubText( "Shipyard module" );
         WPVMButton.setButtonSubText( "Web page viewer module" );
         EDDBMButton.setButtonSubText( "Elite: Dangerous Database" );
-        
+
         HMButton.setIndex( 0 );
         BBMMButton.setIndex( 1 );
         EMTMButton.setIndex( 2 );
@@ -107,7 +107,7 @@ public class EDAWindow extends JDialog implements EDATabListener {
         SYMButton.setIndex( 5 );
         WPVMButton.setIndex( 6 );
         EDDBMButton.setIndex( 7 );
-        
+
         HMButton.addTabListener( this );
         BBMMButton.addTabListener( this );
         EMTMButton.addTabListener( this );
@@ -116,17 +116,17 @@ public class EDAWindow extends JDialog implements EDATabListener {
         SYMButton.addTabListener( this );
         WPVMButton.addTabListener( this );
         EDDBMButton.addTabListener( this );
-        
+
         selected = HMButton;
-        
+
         HMButton.setSelected( true );
-        
+
         setUndecorated( true );
-        setBackground( new Color( 0, 0, 0, 200) );
+        setBackground( new Color( 0, 0, 0, 200 ) );
         setContentPane( windowPanel );
         setAlwaysOnTop( true );
         setModal( true );
-        
+
         windowPanel.add( HMButton );
         windowPanel.add( BBMMButton );
         windowPanel.add( EMTMButton );
@@ -135,36 +135,36 @@ public class EDAWindow extends JDialog implements EDATabListener {
         windowPanel.add( SYMButton );
         windowPanel.add( WPVMButton );
         windowPanel.add( EDDBMButton );
-        
+
         HMButton.setLocation( 6, 9 );
         BBMMButton.setLocation( 52, 9 );
         EMTMButton.setLocation( 208, 9 );
         NSSMButton.setLocation( 364, 9 );
         GMMButton.setLocation( 520, 9 );
-        SYMButton.setLocation(676, 9);
+        SYMButton.setLocation( 676, 9 );
         WPVMButton.setLocation( 832, 9 );
         EDDBMButton.setLocation( 988, 9 );
     }
-    
+
     /**
      *
      */
-    public void setVisible() {
-        setVisible( ! isVisible() );
+    public void setVisible( ) {
+        setVisible( !isVisible( ) );
     }
-    
+
     /**
-     * Sets the selected button based off the provided index.
-     * Does nothing if the index does not exist.
+     * Sets the selected button based off the provided index. Does nothing if the index does not exist.
+     *
      * @param index
      */
-    public void setSelectedButton(int index) {
-        
-        if (index >= 0 && index <= 7) {
-            unselectButton();
-    
-            SwingUtilities.invokeLater( () -> {
-                switch (index) {
+    public void setSelectedButton( int index ) {
+
+        if ( index >= 0 && index <= 7 ) {
+            unselectButton( );
+
+            SwingUtilities.invokeLater( ( ) -> {
+                switch ( index ) {
                     case 0:
                         HMButton.setSelected( true );
                         selectedIndex = 0;
@@ -200,51 +200,50 @@ public class EDAWindow extends JDialog implements EDATabListener {
             } );
         }
     }
-    
+
     /**
-     *
      * @return
      */
-    public int getSelectedIndex() {
+    public int getSelectedIndex( ) {
         return selectedIndex;
     }
-    
+
     /**
      * Switches the currently displayed panel to the new one.
      */
-    private void switchPanel( EDAWindowPanel panelToDisplay) {
-    
+    private void switchPanel( EDAWindowPanel panelToDisplay ) {
+
     }
-    
+
     /**
      * Unselects any selected buttons.
      */
-    private void unselectButton() {
-        
+    private void unselectButton( ) {
+
         selectedIndex = -1;
-        
-        if ( HMButton.isSelected()) {
+
+        if ( HMButton.isSelected( ) ) {
             HMButton.setSelected( false );
-        } else if ( BBMMButton.isSelected()) {
+        } else if ( BBMMButton.isSelected( ) ) {
             BBMMButton.setSelected( false );
-        } else if ( EMTMButton.isSelected()) {
+        } else if ( EMTMButton.isSelected( ) ) {
             EMTMButton.setSelected( false );
-        } else if ( NSSMButton.isSelected()) {
+        } else if ( NSSMButton.isSelected( ) ) {
             NSSMButton.setSelected( false );
-        } else if ( GMMButton.isSelected()) {
+        } else if ( GMMButton.isSelected( ) ) {
             GMMButton.setSelected( false );
-        } else if (SYMButton.isSelected()) {
+        } else if ( SYMButton.isSelected( ) ) {
             SYMButton.setSelected( false );
-        } else if (WPVMButton.isSelected()) {
+        } else if ( WPVMButton.isSelected( ) ) {
             WPVMButton.setSelected( false );
-        } else if (EDDBMButton.isSelected()) {
+        } else if ( EDDBMButton.isSelected( ) ) {
             EDDBMButton.setSelected( false );
         }
     }
-    
+
     @Override
-    public void tabClicked (TabEvent event) {
-        int index = event.getSource().getIndex();
+    public void tabClicked( TabEvent event ) {
+        int index = event.getSource( ).getIndex( );
         setSelectedButton( index );
     }
 }

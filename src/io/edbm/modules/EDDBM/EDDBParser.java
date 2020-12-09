@@ -35,11 +35,6 @@ public class EDDBParser {
      */
     private final String NA = "Unavailable";
     
-    /**
-     *
-     */
-    private Results results;
-    
     
     /**
      *
