@@ -100,8 +100,9 @@ public class ActionDispatcher implements ControllerInputListener,
         actionsMap.put( "visibilityWindowAction", new WindowVisibilityAction( appWindow) );
         
         Controller[] controllers = env.getControllers();
-        
-        for (Controller c : controllers) {
+
+        //TODO: look into OSX support
+        /*for (Controller c : controllers) {
             if (c != null) {
                 if (c.getName().equals( "Stream Deck" )) {
                     System.out.println(c.getType());
@@ -114,7 +115,7 @@ public class ActionDispatcher implements ControllerInputListener,
             } else {
                 Sentry.captureMessage( "Controller is null. Operating System : " + System.getProperty( "os.name" ) );
             }
-        }
+        }*/
         
         //todo load input binds map from external source
         createFakeBinds();

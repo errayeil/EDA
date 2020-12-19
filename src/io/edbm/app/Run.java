@@ -4,17 +4,9 @@ import io.edbm.Input.ActionDispatcher;
 import io.edbm.Input.Controller.ControllerPollerManager;
 import io.edbm.Input.Keyboard.NativeHook;
 import io.edbm.UI.EDAWindow;
-import io.edbm.modules.EDDBM.EDDBParser;
-import io.edbm.modules.EDDBM.POJO.Body;
-import io.edbm.modules.EDDBM.POJO.Faction;
-import io.edbm.modules.EDDBM.POJO.PopulatedSystem;
-import io.edbm.modules.EDDBM.POJO.Station;
-import io.sentry.Sentry;
-import java.awt.Dimension;
-import java.awt.KeyboardFocusManager;
-import java.io.IOException;
-import java.util.List;
-import javax.swing.SwingUtilities;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -88,30 +80,28 @@ public class Run {
      */
     private void init() {
 
-        Sentry.init(options -> {
-            options.setDsn("https://f2fa9b61a4de48e680342299516550bb@o291527.ingest.sentry.io/5545580");
-        });
-        
         appWindow = new EDAWindow();
         actionDispatcher = new ActionDispatcher( appWindow );
         controlManager = new ControllerPollerManager( actionDispatcher );
-        hook = new NativeHook();
-        
+        //hook = new NativeHook();
+
+        /*
+        TODO: Look into OSX support
         hook.setEventListener( actionDispatcher );
-        
         actionDispatcher.setControllerManager( controlManager );
-        
         controlManager.createPollers();
         hook.registerHookForKeyPressed();
         hook.registerHookForKeyReleased();
         hook.start();
-    
+        */
+
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher( actionDispatcher );
-    
+
         SwingUtilities.invokeLater( () -> {
-            appWindow.setSize( new Dimension( 1500, 900) );
+            appWindow.initButtons();
+            appWindow.setSize( new Dimension( 1200, 750) );
             appWindow.setLocationRelativeTo( null );
-            appWindow.setVisible( true );
+            appWindow.setVisible();
         } );
     }
     

@@ -1,9 +1,7 @@
 package io.edbm.UI;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Custom JPanel designed to contain module panels.
@@ -39,16 +37,7 @@ public class EDAModulePanel extends JPanel {
         setMinimumSize( new Dimension( width, height) );
         setSize( new Dimension(width, height) );
         setLayout( null );
-        setBackground( new Color( 0, 0, 0, 0) );
-    }
-    
-    /**
-     *
-     * @param g
-     */
-    @Override
-    protected void paintComponent ( Graphics g ) {
-        super.paintComponent( g );
+        setBackground( new Color( 0, 0, 0, 200) );
     }
     
 }

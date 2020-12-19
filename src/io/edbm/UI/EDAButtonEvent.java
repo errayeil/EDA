@@ -1,14 +1,22 @@
 package io.edbm.UI;
 
-public class TabEvent {
-    
+/**
+ * @author Steven Frizell
+ * @version HIP 2
+ * @since HIP 2
+ */
+public class EDAButtonEvent {
+
+    /**
+     *
+     */
     private EDAButton source;
     
     /**
      *
      * @param source
      */
-    public TabEvent(EDAButton source) {
+    public EDAButtonEvent( EDAButton source) {
         this.source = source;
     }
     

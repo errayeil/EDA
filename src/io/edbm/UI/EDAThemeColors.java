@@ -7,7 +7,7 @@ import java.awt.Color;
  * @version 1
  * @since 1
  */
-public final class ThemeColors {
+public final class EDAThemeColors {
     
     /**
      * The outline of a button.
