@@ -5,13 +5,16 @@ import io.edbm.Input.Controller.ControllerPollerManager;
 import io.edbm.Input.Keyboard.NativeHook;
 import io.edbm.UI.EDAWindow;
 
+import io.edbm.Utilities.Utils;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.swing.*;
 import java.awt.*;
 
 /**
  *
  */
-public class Run {
+public class RunEDA {
     
     /**
      * The primary window of the application.
@@ -36,7 +39,7 @@ public class Run {
     /**
      *
      */
-    private Run() {
+    private RunEDA () {
        boolean installed = checkInstall();
        
        if (!installed) {
@@ -81,8 +84,8 @@ public class Run {
     private void init() {
 
         appWindow = new EDAWindow();
-        actionDispatcher = new ActionDispatcher( appWindow );
-        controlManager = new ControllerPollerManager( actionDispatcher );
+        /*actionDispatcher = new ActionDispatcher( appWindow );
+        controlManager = new ControllerPollerManager( actionDispatcher );*/
         //hook = new NativeHook();
 
         /*
@@ -94,8 +97,15 @@ public class Run {
         hook.registerHookForKeyReleased();
         hook.start();
         */
+        //KeyboardFocusManager.getCu
 
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher( actionDispatcher );
+        //KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher( actionDispatcher );
+
+        EDASetup setup = new EDASetup();
+        System.out.println( "Is Java path null " + Utils.isJavaPathNull());
+        System.out.println("Java Path " + Utils.getJavaPath());
+        System.out.println("Java Version " + Utils.getJavaVersion());
+        System.out.println("User home " + Utils.getUserHome());
 
         SwingUtilities.invokeLater( () -> {
             appWindow.initButtons();
@@ -110,6 +120,6 @@ public class Run {
      * @param args
      */
     public static void main(String[] args) {
-        new Run();
+        new RunEDA();
     }
 }

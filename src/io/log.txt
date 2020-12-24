@@ -1,0 +1,5 @@
+Is Java path null false
+Java Path C:\Users\steve\.jdks\openjdk-15.0.1
+Java Version 15.0.1
+User home C:\Users\steve
+Eurostile

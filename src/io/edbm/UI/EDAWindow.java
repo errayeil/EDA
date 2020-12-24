@@ -65,6 +65,11 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
      * Button to select the EDDB Query module.
      */
     private EDAButton EDDBMButton;
+    
+    /**
+     *
+     */
+    private EDAButton NDMButton;
 
     /**
      * The panel that displays the UI background graphics.
@@ -90,9 +95,12 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         setModal( true );
         setLayout( null );
     }
-
+    
+    /**
+     *
+     */
     public void initButtons() {
-        HMButton = new EDAButton( "HM", 40, 40 );
+        HMButton = new EDAButton( "", 40, 40 );
         BBMMButton = new EDAButton( "BMM" );
         EMTMButton = new EDAButton( "MTM" );
         NSSMButton = new EDAButton( "NSSM" );
@@ -100,10 +108,13 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         SYMButton = new EDAButton( "SYM" );
         WPVMButton = new EDAButton( "WPVM" );
         EDDBMButton = new EDAButton( "EDDBM" );
+        NDMButton = new EDAButton( "", 40, 40 );
 
         modulePanels = new HashMap<>( );
 
-        HMButton.setSecondaryText( " " );
+        
+        HMButton.setImageIcon( new ImageIcon(EDAWindow.class.getResource( "/io/edbm/resources/home24p.png" )) );
+        HMButton.setSecondaryText( "" );
         BBMMButton.setSecondaryText( "Bookmark management" );
         EMTMButton.setSecondaryText( "Material tracker" );
         NSSMButton.setSecondaryText( "Nearby star system" );
@@ -111,6 +122,8 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         SYMButton.setSecondaryText( "Shipyard module" );
         WPVMButton.setSecondaryText( "Web page viewer" );
         EDDBMButton.setSecondaryText( "Elite: Dangerous Database" );
+        NDMButton.setSecondaryText( "" );
+        NDMButton.setImageIcon( new ImageIcon(EDAWindow.class.getResource( "/io/edbm/resources/nonotif24p.png" )) );
 
         HMButton.setIndex( 0 );
         BBMMButton.setIndex( 1 );
@@ -120,6 +133,7 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         SYMButton.setIndex( 5 );
         WPVMButton.setIndex( 6 );
         EDDBMButton.setIndex( 7 );
+        NDMButton.setIndex( 8 );
 
 //        HMButton.addButtonListener( this );
 //        BBMMButton.addButtonListener( this );
@@ -142,6 +156,7 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         windowPanel.add( SYMButton );
         windowPanel.add( WPVMButton );
         windowPanel.add( EDDBMButton );
+        windowPanel.add( NDMButton );
 
         HMButton.setLocation( 6, 9 );
         BBMMButton.setLocation( 52, 9 );
@@ -151,6 +166,7 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         SYMButton.setLocation( 676, 9 );
         WPVMButton.setLocation( 832, 9 );
         EDDBMButton.setLocation( 988, 9 );
+        NDMButton.setLocation( 988 + 156, 9 );
 
         initModulePanels();
     }

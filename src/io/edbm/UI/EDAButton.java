@@ -31,6 +31,11 @@ public class EDAButton extends JComponent {
      * The string that appears under the centered primary text.
      */
     private String secondaryText;
+    
+    /**
+     *
+     */
+    private ImageIcon buttonIcon;
 
     /**
      * A list of EDAButtonListeners listening for events.
@@ -50,12 +55,12 @@ public class EDAButton extends JComponent {
     /**
      * The font used for the primary string.
      */
-    private Font primaryFont = new Font( "Verdana", Font.BOLD, 12);
+    private Font primaryFont = new Font( "Eurostile", Font.BOLD, 15);
 
     /**
      * The font used for the secondary string appearing under the centered primary string.
      */
-    private Font secondaryFont = new Font("Verdana", Font.BOLD, 9);
+    private Font secondaryFont = new Font("Eurostile", Font.PLAIN, 13);
     
     /**
      *
@@ -83,7 +88,12 @@ public class EDAButton extends JComponent {
 
             @Override
             public void mousePressed( MouseEvent e ) {
-                isSelected = true;
+                if (isMomentary) {
+                    isSelected = true;
+                } else {
+                    isSelected = ! isSelected;
+                }
+                
                 repaint( );
             }
 
@@ -113,7 +123,15 @@ public class EDAButton extends JComponent {
     public void addButtonListener( EDAButtonListener al) {
         listeners.add( al );
     }
-
+    
+    /**
+     *
+     * @return
+     */
+    public ImageIcon getIcon() {
+        return buttonIcon;
+    }
+    
     /**
      * Returns the primary text that appears in the center of the button.
      * @return
@@ -202,6 +220,14 @@ public class EDAButton extends JComponent {
     
     /**
      *
+     * @param icon
+     */
+    public void setImageIcon(ImageIcon icon) {
+       this.buttonIcon = icon;
+    }
+    
+    /**
+     *
      * @param text
      */
     public void setPrimaryText(String text) {
@@ -248,6 +274,7 @@ public class EDAButton extends JComponent {
         paintBorders( g2d, this );
         paintFill( g2d, this );
         paintStrings( g2d, this );
+        paintIcon( g2d );
     }
 
     /**
@@ -292,23 +319,33 @@ public class EDAButton extends JComponent {
         Rectangle visibleRect  = button.getVisibleRect();
         FontMetrics primaryMetrics = button.getFontMetrics( button.getPrimaryFont() );
         FontMetrics secondaryMetrics = button.getFontMetrics(button.getSecondaryFont() );
-        String primary = button.getPrimaryText();
-        String secondary = button.getSecondaryText();
 
-        int x1 = getCenteredStringX( visibleRect, primaryMetrics, primary );
-        int x2 = getCenteredStringX( visibleRect, secondaryMetrics, secondary );
-        int y1 = getCenteredStringY( visibleRect, primaryMetrics, primary );
-        int y2 = getCenteredStringY( visibleRect, secondaryMetrics, secondary );
+        int x1 = getCenteredStringX( visibleRect, primaryMetrics, primaryText );
+        int x2 = getCenteredStringX( visibleRect, secondaryMetrics, secondaryText );
+        int y1 = getCenteredStringY( visibleRect, primaryMetrics, primaryText );
+        int y2 = getCenteredStringY( visibleRect, secondaryMetrics, secondaryText );
 
-        if ( button.isSelected( ) )
+        if ( isSelected )
             g2d.setColor( EDAThemeColors.SELECTED_TEXT_COLOR );
         else
             g2d.setColor( EDAThemeColors.UNSELECTED_TEXT_COLOR );
 
-        g2d.setFont( button.getPrimaryFont() );
-        g2d.drawString( primary, x1, y1 - 4 ); //slightly adjust string placement
-        g2d.setFont( button.getSecondaryFont() );
-        g2d.drawString( secondary, x2, y2 + 10 ); // Adjust string placement
+        g2d.setFont( primaryFont );
+        g2d.drawString( primaryText, x1, y1 - 4 ); //slightly adjust string placement
+        g2d.setFont( secondaryFont );
+        g2d.drawString( secondaryText, x2, y2 + 10 ); // Adjust string placement
+    }
+    
+    /**
+     *
+     * @param g2d
+     */
+    protected void paintIcon(Graphics g2d) {
+        if (buttonIcon != null) {
+            int x = getWidth() / 2;
+            int y = getHeight() / 2;
+            g2d.drawImage( buttonIcon.getImage(), x - 12, y - 12, null);
+        }
     }
 
     /**
