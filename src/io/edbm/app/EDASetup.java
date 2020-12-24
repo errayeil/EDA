@@ -3,7 +3,6 @@ package io.edbm.app;
 import io.edbm.Utilities.Utils;
 import io.edbm.modules.NDM.NotificationManager;
 import io.sentry.Sentry;
-import io.sentry.UserFeedback;
 import io.sentry.protocol.SentryId;
 import io.sentry.protocol.User;
 import java.awt.Font;
@@ -20,7 +19,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.prefs.Preferences;
 
 /**
@@ -545,7 +543,7 @@ public class EDASetup {
         }
         
         Sentry.addBreadcrumb( "Creating BufferedReader for file." );
-        BufferedReader fileReader = new BufferedReader( new InputStreamReader( EDASetup.class.getResourceAsStream( "/Version.txt" ) ));
+        BufferedReader fileReader = new BufferedReader( new InputStreamReader( EDASetup.class.getResourceAsStream( "/Version" ) ));
     
         String urlRead = null;
         String fileRead = null;
