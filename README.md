@@ -14,7 +14,7 @@ While developing I am focusing on these main points:
 <li> Support. Controller support built in allowing various key binds to be bound to buttons on your flight stick.</li>
 </ul>
 
-# Planned Features
+# Planned game related Features
 Besides the few features mentioned above, the following are planned.
 
 
@@ -27,10 +27,12 @@ Besides the few features mentioned above, the following are planned.
 <li><b>GMM</b>. Galactic Market module. Displays prices of sought after resources and nearest systems to obtain and sell those resources.</li>
 </ul>
 
-#Technical Features
+# Planned Technical Features
 <ul>
 <li>Custom Look and Feel for the UI.</li>
 <li>Plugin API to allow external developers to add modules to EDA.</li>
+<li>Integrated error tracking automatically sent to me, with additional optional features to provide more information.</li>
+<li>Automatic updates. Visit GitHub once for the initial download. After that, you won't have to come Bach for new versions.</li>
 </ul>
 
 
