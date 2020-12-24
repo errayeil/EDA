@@ -1,3 +1,4 @@
+Version: HIP 2
 # E.D.A (Elite Dangerous Assistant)
 Companion app for Elite Dangerous providing various features such as better bookmark management, eddb queries in app, and material tracking.
 
