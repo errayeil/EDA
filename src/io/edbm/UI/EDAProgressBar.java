@@ -1,5 +1,7 @@
 package io.edbm.UI;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 
@@ -64,6 +66,11 @@ public class EDAProgressBar extends JComponent {
      * The font of the text.
      */
     private Font foregroundFont = new Font( "Eurostile", Font.PLAIN, 10);
+    
+    /**
+     *
+     */
+    private Timer indeterminateTimer;
     
     /**
      *
@@ -148,7 +155,7 @@ public class EDAProgressBar extends JComponent {
      */
     public void setIndeterminateProgressColor(Color newColor) {
         indeterminateProgressColor = newColor;
-        drawFill( getGraphics() );
+        repaint();
     }
 
     /**
@@ -183,7 +190,8 @@ public class EDAProgressBar extends JComponent {
     @Override
     protected void paintComponent ( Graphics g ) {
         drawBorder( g );
-        
+        drawFill( g );
+        drawString( g );
     }
     
     /**
@@ -197,25 +205,71 @@ public class EDAProgressBar extends JComponent {
     }
     
     /**
-     *
-     * @param g
+     * Draws the 'fill' that represents the progress.
+     * @param g The graphics of the component.
      */
     private void drawFill(Graphics g) {
-
+        //Create offsets to account for the space taken up from the border.
+        int fillXStart = 3;
+        int fillYStart = 3;
+        
         if (!isIndeterminate) {
-            int fillXStart = 3;
-            int fillYStart = 3;
-
+            g.setColor( progressColor );
             g.drawRect( fillXStart, fillYStart, currentValue, getHeight() - 3 );
+        } else {
+            indeterminateTimer = new Timer( 0 , new ActionListener() {
+                int value = 0;
+                Color in = indeterminateProgressColor;
+                Color nc = new Color(in.getRed(), in.getGreen(), in.getBlue());
+                
+                /**
+                 *
+                 * @param e
+                 */
+                @Override
+                public void actionPerformed ( ActionEvent e ) {
+                    if (value == 0) {
+                        g.setColor(indeterminateProgressColor);
+                    } else {
+                        Color cc;
+                        
+                        if (nc.getRed() + 10 > 255) {
+                            cc = nc;
+                        } else {
+                            cc = new Color(nc.getRed() + 10, in.getGreen(), in.getBlue());
+                        }
+                        
+                        g.setColor(cc);
+                        nc = cc;
+                    }
+                    g.drawRect( fillXStart, fillYStart, value, getHeight() - 3 );
+                    value = value + 5;
+                }
+            } );
+            
+            indeterminateTimer.setRepeats( true );
+            indeterminateTimer.setDelay( 100 );
+            indeterminateTimer.start();
         }
     }
     
     /**
-     *
-     * @param g
+     * Draws the string on top of the progress bar, if the progress bar is not indeterminate and
+     * a string has been specified.
+     * @param g The graphics of the component;
      */
     private void drawString(Graphics g) {
+        if (!isIndeterminate) {
+            Rectangle visibleRect  = getVisibleRect();
+            FontMetrics primaryMetrics = getFontMetrics( foregroundFont );
     
+            int x1 = getCenteredStringX( visibleRect, primaryMetrics, paintedString );
+            int y1 = getCenteredStringY( visibleRect, primaryMetrics, paintedString );
+            
+            g.setColor( foregroundColor );
+            g.setFont( foregroundFont );
+            g.drawString( paintedString, x1, y1 );
+        }
     }
     
     

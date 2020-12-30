@@ -1,7 +1,1 @@
 C:\Users\steve\.jdks\openjdk-15.0.1
-Dec 28, 2020 11:30:07 PM net.java.games.input.ControllerEnvironment log
-INFO: Failed to initialize device L-VPC Stick WarBRD because of: java.io.IOException: Failed to acquire device (8007001e)
-Dec 28, 2020 11:30:07 PM org.simplenativehooks.windows.GlobalWindowsJnaEventOchestrator start
-INFO: Starting JNA even hook thread...
-Dec 28, 2020 11:30:07 PM org.simplenativehooks.windows.GlobalWindowsJnaEventOchestrator start
-INFO: JNA even hook thread started.
