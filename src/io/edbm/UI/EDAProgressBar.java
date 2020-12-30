@@ -1,11 +1,7 @@
 package io.edbm.UI;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import javax.swing.JComponent;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Steven Frizell
@@ -45,27 +41,27 @@ public class EDAProgressBar extends JComponent {
     private int maxValue = 100;
     
     /**
-     *
+     * The color of text painted on the progress bar.
      */
     private Color foregroundColor;
     
     /**
-     *
+     * The color of the border of the progress bar.
      */
     private Color borderColor = EDAThemeColors.BUTTON_OUTLINE;
     
     /**
-     *
+     * The color of the progress bar fill.
      */
     private Color progressColor = EDAThemeColors.BUTTON_SELECTED;
     
     /**
-     *
+     * The color of the progress bar fill when its set to indeterminate.
      */
-    private Color indeterminateProgressColor;
+    private Color indeterminateProgressColor = EDAThemeColors.BUTTON_UNSELECTED;
     
     /**
-     *
+     * The font of the text.
      */
     private Font foregroundFont = new Font( "Eurostile", Font.PLAIN, 10);
     
@@ -98,28 +94,86 @@ public class EDAProgressBar extends JComponent {
         this.minValue = minValue;
         this.maxValue = maxValue;
     }
-    
+
     /**
      *
-     * @param newMin
+     * @param newCurrent
      */
-    public void setMinValue(int newMin) {
-        minValue = newMin;
-        repaint();
-    }
-    
-    /**
-     *
-     * @param newMax
-     */
-    public void setMaxValue(int newMax) {
-        maxValue = newMax;
-        repaint();
-    }
-    
     public void setCurrentValue(int newCurrent) {
+        if (newCurrent > 100 || newCurrent < 0) {
+            throw new IllegalArgumentException("Current value can not be greater than 100 or less than 0.");
+        }
+
         currentValue = newCurrent;
-        repaint();
+        drawFill( getGraphics() );
+    }
+
+    /**
+     *
+     * @param newFont
+     */
+    public void setForegroundFont(Font newFont) {
+        foregroundFont = newFont;
+    }
+
+    /**
+     *
+     * @param newColor
+     */
+    public void setForegroundColor(Color newColor) {
+        foregroundColor = newColor;
+    }
+
+    /**
+     *
+     * @param newColor
+     */
+    public void setBorderColor(Color newColor) {
+        borderColor = newColor;
+        drawBorder( getGraphics() );
+    }
+
+    /**
+     *
+     * @param newColor
+     */
+    public void setProgressColor(Color newColor) {
+        progressColor = newColor;
+        drawFill( getGraphics() );
+    }
+
+    /**
+     *
+     * @param newColor
+     */
+    public void setIndeterminateProgressColor(Color newColor) {
+        indeterminateProgressColor = newColor;
+        drawFill( getGraphics() );
+    }
+
+    /**
+     *
+     * @param newString
+     */
+    public void setPaintedString(String newString) {
+        paintedString = newString;
+        drawString( getGraphics() );
+    }
+
+    /**
+     *
+     * @param isStringPainted
+     */
+    public void setStringPainted(boolean isStringPainted) {
+        this.isStringPainted = isStringPainted;
+    }
+
+    /**
+     *
+     * @param isIndeterminate
+     */
+    public void setIndeterminate(boolean isIndeterminate) {
+        this.isIndeterminate = isIndeterminate;
     }
     
     /**
@@ -136,7 +190,10 @@ public class EDAProgressBar extends JComponent {
      *
      */
     private void drawBorder ( Graphics g) {
-    
+        g.setColor( borderColor );
+        g.drawRect( 0, 0, getWidth(), getHeight() );
+        g.drawRect( 1, 1, getWidth() - 1, getHeight() - 1 );
+        g.drawRect( 2, 2, getWidth() - 2, getHeight() - 2 );
     }
     
     /**
@@ -144,7 +201,13 @@ public class EDAProgressBar extends JComponent {
      * @param g
      */
     private void drawFill(Graphics g) {
-    
+
+        if (!isIndeterminate) {
+            int fillXStart = 3;
+            int fillYStart = 3;
+
+            g.drawRect( fillXStart, fillYStart, currentValue, getHeight() - 3 );
+        }
     }
     
     /**

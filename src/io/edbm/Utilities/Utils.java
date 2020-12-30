@@ -1,15 +1,7 @@
 package io.edbm.Utilities;
 
-import java.awt.Dialog;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import javax.swing.JComponent;
-import javax.swing.JWindow;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Steven Frizell
@@ -22,19 +14,45 @@ public class Utils {
      * Private Constructor.
      */
     private Utils() {}
-    
+
+    /**
+     *
+     * @param comp
+     * @param visible
+     */
+    public static void invokeSetVisible( Container container, boolean visible) {
+        SwingUtilities.invokeLater( () -> {
+            container.setVisible( visible);
+        });
+    }
+
+    /**
+     *
+     * @param comp
+     * @param visible
+     */
     public static void invokeSetVisibleDialog( Dialog comp, boolean visible) {
         SwingUtilities.invokeLater( () -> {
             comp.setVisible( visible);
         });
     }
-    
+
+    /**
+     *
+     * @param comp
+     * @param visible
+     */
     public static void invokeSetVisibleWind( JWindow comp, boolean visible) {
         SwingUtilities.invokeLater( () -> {
             comp.setVisible( visible);
         });
     }
-    
+
+    /**
+     *
+     * @param comp
+     * @param visible
+     */
     public static void invokeSetVisibleComp( JComponent comp, boolean visible) {
         SwingUtilities.invokeLater( () -> {
          comp.setVisible( visible);
