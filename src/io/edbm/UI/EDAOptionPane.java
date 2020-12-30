@@ -1,13 +1,7 @@
 package io.edbm.UI;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -28,27 +22,36 @@ public class EDAOptionPane {
      */
     public static JDialog showProgressDialog(Component parentComponent, String actionMessage) {
         JDialog dialog = new JDialog();
-        JProgressBar progress = new JProgressBar();
+        EDAProgressBar progress = new EDAProgressBar(  );
+        JLabel label = new JLabel(actionMessage);
+
+        label.setFont( new Font("Eurostile", Font.PLAIN, 16) );
+        label.setForeground( Color.BLACK );
+        label.setSize( new Dimension(200, 15) );
         
-        progress.setMaximumSize( new Dimension(200, 40) );
-        progress.setSize( new Dimension( 200, 40) );
+        progress.setMaximumSize( new Dimension(200, 30) );
+        progress.setSize( new Dimension( 200, 30) );
         progress.setIndeterminate( true );
-        progress.setString( actionMessage );
-        
-        dialog.setTitle( "Processing" );
+        progress.setPaintedString( actionMessage );
+
+        dialog.setUndecorated( true );
         dialog.setModal( true );
         dialog.setAlwaysOnTop( true );
+        dialog.setResizable( false );
         
         dialog.setMinimumSize( new Dimension(400, 100) );
         dialog.setSize( new Dimension(400, 100) );
         
+        dialog.setLayout( null );
+        dialog.setContentPane( new EDABackgroundContainer() );
+        dialog.add( progress );
+        dialog.add( label );
+
+        label.setLocation( 120, 15 );
+        progress.setLocation( 100, 35 );
+
         dialog.setLocationRelativeTo( null );
         dialog.pack();
-        
-        Container contentPane = dialog.getContentPane();
-        
-        contentPane.setLayout( new BorderLayout() );
-        contentPane.add( progress, BorderLayout.CENTER );
     
         SwingUtilities.invokeLater( () -> {
             dialog.setVisible( true );

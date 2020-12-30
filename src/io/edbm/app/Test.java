@@ -24,10 +24,12 @@ public class Test {
     frame.setMinimumSize( new Dimension(600, 600) );
     frame.setSize( new Dimension(600, 600) );
 
-    Container pane = frame.getContentPane();
+    JPanel panel = new JPanel(  );
 
-    pane.setLayout( new BorderLayout(  ) );
-    pane.add( bar, BorderLayout.CENTER);
+    panel.setLayout( new BorderLayout(  ) );
+    panel.add( bar, BorderLayout.CENTER );
+
+    frame.setContentPane( panel );
 
     Utils.invokeSetVisible( frame, true);
     

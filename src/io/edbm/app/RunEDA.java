@@ -3,14 +3,14 @@ package io.edbm.app;
 import io.edbm.Input.ActionDispatcher;
 import io.edbm.Input.Controller.ControllerPollerManager;
 import io.edbm.Input.Keyboard.NativeHook;
+import io.edbm.UI.EDAOptionPane;
 import io.edbm.UI.EDAWindow;
 import io.edbm.modules.NDM.NotificationManager;
 import io.sentry.Sentry;
 import io.sentry.protocol.SentryId;
-import java.awt.Dimension;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -64,31 +64,34 @@ public class RunEDA {
      */
     private void init () {
         
-        setup.putPermissionsForTesting();
-        setup.clearEverythingForTesting();
-        setup.putPermissionsForTesting();
+//        setup.putPermissionsForTesting();
+//        setup.clearEverythingForTesting();
+//        setup.putPermissionsForTesting();
+//
+//        setup.startFirstTimeSetup();
         
-        setup.startFirstTimeSetup();
-        
-        appWindow = new EDAWindow();
-        actionDispatcher = new ActionDispatcher( appWindow );
-        controlManager = new ControllerPollerManager( actionDispatcher );
-        hook = new NativeHook();
-
-//        //TODO: Look into OSX support
-        hook.setEventListener( actionDispatcher );
-        actionDispatcher.setControllerManager( controlManager );
-        controlManager.createPollers();
-        hook.registerHookForKeyPressed();
-        hook.registerHookForKeyReleased();
-        hook.start();
+          appWindow = new EDAWindow();
+//        actionDispatcher = new ActionDispatcher( appWindow );
+//        controlManager = new ControllerPollerManager( actionDispatcher );
+//        hook = new NativeHook();
+//
+////        //TODO: Look into OSX support
+//        hook.setEventListener( actionDispatcher );
+//        actionDispatcher.setControllerManager( controlManager );
+//        controlManager.createPollers();
+//        hook.registerHookForKeyPressed();
+//        hook.registerHookForKeyReleased();
+//        hook.start();
         
         SwingUtilities.invokeLater( ()->{
+            System.out.println( "Invoking" );
             appWindow.initButtons();
             appWindow.setSize( new Dimension( 1200 , 750 ) );
             appWindow.setLocationRelativeTo( null );
-            appWindow.setVisible();
+            //appWindow.setVisible(true );
         } );
+
+        EDAOptionPane.showProgressDialog( null, "Testing progress window" );
     }
     
     /**
