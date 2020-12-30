@@ -1,11 +1,15 @@
 package io.edbm.Utilities;
 
+import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import javax.swing.JComponent;
+import javax.swing.JWindow;
+import javax.swing.SwingUtilities;
 
 /**
  * @author Steven Frizell
@@ -19,7 +23,23 @@ public class Utils {
      */
     private Utils() {}
     
+    public static void invokeSetVisibleDialog( Dialog comp, boolean visible) {
+        SwingUtilities.invokeLater( () -> {
+            comp.setVisible( visible);
+        });
+    }
     
+    public static void invokeSetVisibleWind( JWindow comp, boolean visible) {
+        SwingUtilities.invokeLater( () -> {
+            comp.setVisible( visible);
+        });
+    }
+    
+    public static void invokeSetVisibleComp( JComponent comp, boolean visible) {
+        SwingUtilities.invokeLater( () -> {
+         comp.setVisible( visible);
+        });
+    }
     /**
      * Retrieves the current installed Java Version.
      * @return

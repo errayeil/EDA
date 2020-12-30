@@ -4,17 +4,23 @@ import io.edbm.Input.ActionDispatcher;
 import io.edbm.Input.Controller.ControllerPollerManager;
 import io.edbm.Input.Keyboard.NativeHook;
 import io.edbm.UI.EDAWindow;
-
-import io.edbm.Utilities.Utils;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import javax.swing.*;
-import java.awt.*;
+import io.edbm.modules.NDM.NotificationManager;
+import io.sentry.Sentry;
+import io.sentry.protocol.SentryId;
+import java.awt.Dimension;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
  */
 public class RunEDA {
+    
+    /**
+     *
+     */
+    private EDASetup setup;
     
     /**
      * The primary window of the application.
@@ -40,76 +46,46 @@ public class RunEDA {
      *
      */
     private RunEDA () {
-       boolean installed = checkInstall();
-       
-       if (!installed) {
-           install();
-       }
-       
-       boolean updates = checkUpdates();
-       
-       if (updates) {
-       
-       }
-       
-       init();
-    }
-    
-    /**
-     *
-     */
-    private boolean checkInstall() {
+        setup = new EDASetup();
         
-        return true;
-    }
-    
-    /**
-     *
-     */
-    private void install() {
-    
-    }
-    
-    /**
-     *
-     */
-    private boolean checkUpdates() {
+        try {
+            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+        } catch ( ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e ) {
+            e.printStackTrace();
+            SentryId id = Sentry.captureException( e );
+            NotificationManager.captureUserFeedback( id );
+        }
         
-        return true;
+        init();
     }
     
     /**
      *
      */
-    private void init() {
-
+    private void init () {
+        
+        setup.putPermissionsForTesting();
+        setup.clearEverythingForTesting();
+        setup.putPermissionsForTesting();
+        
+        setup.startFirstTimeSetup();
+        
         appWindow = new EDAWindow();
-        /*actionDispatcher = new ActionDispatcher( appWindow );
-        controlManager = new ControllerPollerManager( actionDispatcher );*/
-        //hook = new NativeHook();
+        actionDispatcher = new ActionDispatcher( appWindow );
+        controlManager = new ControllerPollerManager( actionDispatcher );
+        hook = new NativeHook();
 
-        /*
-        TODO: Look into OSX support
+//        //TODO: Look into OSX support
         hook.setEventListener( actionDispatcher );
         actionDispatcher.setControllerManager( controlManager );
         controlManager.createPollers();
         hook.registerHookForKeyPressed();
         hook.registerHookForKeyReleased();
         hook.start();
-        */
-        //KeyboardFocusManager.getCu
-
-        //KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher( actionDispatcher );
-
-        EDASetup setup = new EDASetup();
-        System.out.println( "Is Java path null " + Utils.isJavaPathNull());
-        System.out.println("Java Path " + Utils.getJavaPath());
-        System.out.println("Java Version " + Utils.getJavaVersion());
-        System.out.println("User home " + Utils.getUserHome());
-
-        SwingUtilities.invokeLater( () -> {
+        
+        SwingUtilities.invokeLater( ()->{
             appWindow.initButtons();
-            appWindow.setSize( new Dimension( 1200, 750) );
+            appWindow.setSize( new Dimension( 1200 , 750 ) );
             appWindow.setLocationRelativeTo( null );
             appWindow.setVisible();
         } );
@@ -117,9 +93,8 @@ public class RunEDA {
     
     /**
      *
-     * @param args
      */
-    public static void main(String[] args) {
+    public static void main ( String[] args ) {
         new RunEDA();
     }
 }

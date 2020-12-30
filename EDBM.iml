@@ -19,5 +19,6 @@
     <orderEntry type="library" name="net.java.jinput:wintab-plugin:2.0.9" level="project" />
     <orderEntry type="library" name="SimpleNativeHooks_0_0_4" level="project" />
     <orderEntry type="library" name="io.sentry:sentry:3.2.0" level="project" />
+    <orderEntry type="library" name="commons-io:commons-io:2.8.0" level="project" />
   </component>
 </module>

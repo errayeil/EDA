@@ -206,7 +206,6 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
     public void setSelectedButton( int index ) {
 
         if ( index >= 0 && index <= 7 ) {
-            unselectButton( );
 
             SwingUtilities.invokeLater( ( ) -> {
                 switch ( index ) {
@@ -263,31 +262,48 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
     /**
      * Unselects any selected buttons.
      */
-    private void unselectButton( ) {
+    private void unselectButton( EDAButton selected) {
 
-        selectedIndex = -1;
+        selectedIndex = selected.getIndex();
 
-        if ( HMButton.isSelected( ) ) {
-            HMButton.setSelected( false );
+        if ( HMButton.isSelected( )) {
+            if (HMButton.getIndex() != selectedIndex) {
+                HMButton.setSelected( false );
+            }
         } else if ( BBMMButton.isSelected( ) ) {
-            BBMMButton.setSelected( false );
+            if (BBMMButton.getIndex() != selectedIndex) {
+                BBMMButton.setSelected( false );
+            }
         } else if ( EMTMButton.isSelected( ) ) {
-            EMTMButton.setSelected( false );
+            if (EMTMButton.getIndex() != selectedIndex) {
+                EMTMButton.setSelected( false );
+            }
         } else if ( NSSMButton.isSelected( ) ) {
-            NSSMButton.setSelected( false );
+            if (NSSMButton.getIndex() != selectedIndex) {
+                NSSMButton.setSelected( false );
+            }
         } else if ( GMMButton.isSelected( ) ) {
-            GMMButton.setSelected( false );
+            if (GMMButton.getIndex() != selectedIndex) {
+                GMMButton.setSelected( false );
+            }
         } else if ( SYMButton.isSelected( ) ) {
-            SYMButton.setSelected( false );
+            if (SYMButton.getIndex() != selectedIndex) {
+                SYMButton.setSelected( false );
+            }
         } else if ( WPVMButton.isSelected( ) ) {
-            WPVMButton.setSelected( false );
+            if (WPVMButton.getIndex() != selectedIndex) {
+                WPVMButton.setSelected( false );
+            }
         } else if ( EDDBMButton.isSelected( ) ) {
-            EDDBMButton.setSelected( false );
+            if (EDDBMButton.getIndex() != selectedIndex) {
+                EDDBMButton.setSelected( false );
+            }
         }
     }
 
     @Override
     public void buttonClicked( EDAButtonEvent event ) {
+        unselectButton( event.getSource() );
         int index = event.getSource().getIndex();
 
         switch (index) {

@@ -347,7 +347,7 @@ public class EDAButton extends JComponent {
             g2d.drawImage( buttonIcon.getImage(), x - 12, y - 12, null);
         }
     }
-
+    
     /**
      * Returns the x coordinate within the specified rectangle accommodating font metrics.
      * This helps us center the text of the button.
@@ -360,7 +360,7 @@ public class EDAButton extends JComponent {
     private int getCenteredStringX(Rectangle visibleRect, FontMetrics metrics, String text) {
         return visibleRect.x + (visibleRect.width - metrics.stringWidth(text)) / 2;
     }
-
+    
     /**
      * Returns the y coordinate within the specified rectangle accommodating font metrics.
      * This helps us center the text of the button.
