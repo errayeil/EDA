@@ -67,10 +67,10 @@ public class RunEDA {
 //        setup.putPermissionsForTesting();
 //        setup.clearEverythingForTesting();
 //        setup.putPermissionsForTesting();
-//
-//        setup.startFirstTimeSetup();
+
+        setup.startFirstTimeSetup();
         
-          appWindow = new EDAWindow();
+        appWindow = new EDAWindow();
 //        actionDispatcher = new ActionDispatcher( appWindow );
 //        controlManager = new ControllerPollerManager( actionDispatcher );
 //        hook = new NativeHook();

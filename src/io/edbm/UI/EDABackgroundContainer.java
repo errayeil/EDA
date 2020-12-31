@@ -19,31 +19,42 @@ public class EDABackgroundContainer extends JPanel {
     private Color backgroundColor = EDAThemeColors.WINDOW_BACKGROUND;
 
     /**
-     *
+     * Boolean determining if the background semi-transparent rectangles
+     * are painted.
      */
     private boolean paintRectangles = true;
 
     /**
-     *
+     * Boolean determining if the top and bottom borders are painted.
      */
     private boolean paintBorders = true;
 
     /**
-     *
+     * Boolean determining if the semi transparent background is painted.
      */
     private boolean paintBackground = true;
+
+    /**
+     * Boolean determining if separators are painted.
+     */
+    private boolean paintSeparators = true;
+
+    /**
+     *
+     */
+    private float backgroundAlpha = 1.0f;
 
     /**
      * TODO: Populate list to add more borders, such as left or right.
      * Should be used for the ends of the panel.
      */
-    java.util.List< EDASeparator > borders = new ArrayList<>( );
+    java.util.List< EDARectangle > borders = new ArrayList<>( );
 
     /**
      * TODO: Populate list to add more separators to the panel.
      * Should be used to separate content in the panel.
      */
-    java.util.List< EDASeparator > separators = new ArrayList<>( );
+    java.util.List< EDARectangle > separators = new ArrayList<>( );
 
     /**
      * Constructor.
@@ -51,6 +62,30 @@ public class EDABackgroundContainer extends JPanel {
     public EDABackgroundContainer( ) {
         setOpaque( false );
         setLayout( null );
+    }
+
+    /**
+     * Adds a separator to be painted for the border.
+     * @param separator
+     */
+    public void addBorder( EDARectangle separator) {
+        borders.add( separator );
+    }
+
+    /**
+     * Adds a separator to be painted.
+     * @param separator
+     */
+    public void addSeparator( EDARectangle separator) {
+        separators.add( separator );
+    }
+
+    /**
+     *
+     * @param alpha
+     */
+    public void setBackgroundAlpha(float alpha) {
+        this.backgroundAlpha = alpha;
     }
 
     /**
@@ -122,12 +157,12 @@ public class EDABackgroundContainer extends JPanel {
     @Override
     protected void paintComponent( Graphics g ) {
         Graphics2D g2d = ( Graphics2D ) g;
+        if ( paintRectangles )
+            drawBackgroundRectangles( g2d );
         if ( paintBackground )
             drawBackground( g2d );
         if ( paintBorders )
             drawBorders( g2d );
-        if ( paintRectangles )
-            drawBackgroundRectangles( g2d );
     }
 
     /**
@@ -150,7 +185,7 @@ public class EDABackgroundContainer extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
         g2d.setComposite( AlphaComposite.getInstance(
-                AlphaComposite.SRC, 0.8f ) );
+                AlphaComposite.SRC, backgroundAlpha ) );
     }
 
     /**
@@ -165,21 +200,12 @@ public class EDABackgroundContainer extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
 
-        //Drawing top and bottom border
-        g2d.setColor( EDAThemeColors.EG_7 );
-        g2d.drawRect( 0, 0, getWidth( ), 1 );
-        g2d.drawRect( 0, getHeight( ), getWidth( ), 1 );
-        g2d.setColor( EDAThemeColors.EG_6 );
-        g2d.drawRect( 0, 1, getWidth( ), 1 );
-        g2d.drawRect( 0, getHeight( ) - 1, getWidth( ), 1 );
-        g2d.setColor( EDAThemeColors.EG_1 );
-        g2d.drawRect( 0, 2, getWidth( ), 1 );
-        g2d.drawRect( 0, getHeight( ) - 2, getWidth( ), 1 );
-        g2d.drawRect( 0, getHeight( ) - 3, getWidth( ), 1 );
-
-        //Drawing border to separate button bar
-        g2d.fillRect( 0, 55, getWidth( ), 3 );
+        for ( EDARectangle sep : borders) {
+            g2d.setColor( sep.getColor() );
+            g2d.fillRect( sep.x, sep.y, sep.width, sep.height );
+        }
     }
+
 
     /**
      * TODO
@@ -201,7 +227,7 @@ public class EDABackgroundContainer extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
         g2d.setComposite( AlphaComposite.getInstance(
-                AlphaComposite.SRC_OVER, 0.8f ) );
+                AlphaComposite.SRC_OVER, backgroundAlpha ) );
 
         int rectangles = getHeight( ) / 4;
         int spacing = 10;

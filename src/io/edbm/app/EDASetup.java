@@ -2,19 +2,16 @@ package io.edbm.app;
 
 import io.edbm.UI.EDAOptionPane;
 import io.edbm.Utilities.Utils;
-import io.edbm.modules.EDDBM.POJO.PendingState;
 import io.edbm.modules.NDM.NotificationManager;
 import io.sentry.Sentry;
 import io.sentry.protocol.SentryId;
 import io.sentry.protocol.User;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.apache.commons.io.FileUtils;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -24,21 +21,11 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileFilter;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.text.RandomStringGenerator;
 
 /**
  * @author Steven Frizell
@@ -320,6 +307,7 @@ public class EDASetup {
      *
      */
     public void startFirstTimeSetup() {
+        System.out.println( "Starting" );
         boolean ready = false;
         
         String line = "\n";
