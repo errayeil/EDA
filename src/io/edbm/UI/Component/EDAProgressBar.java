@@ -4,7 +4,6 @@ import io.edbm.UI.LAF.EDAThemeColors;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -32,17 +31,7 @@ public class EDAProgressBar extends JComponent {
     /**
      *
      */
-    private int minValue = 0;
-
-    /**
-     *
-     */
     private int currentValue = 0;
-
-    /**
-     *
-     */
-    private int maxValue = 100;
 
     /**
      * The color of text painted on the progress bar.
@@ -70,51 +59,35 @@ public class EDAProgressBar extends JComponent {
     private Font foregroundFont = new Font( "Eurostile", Font.PLAIN, 10 );
 
     /**
-     *
+     * The timer used to paint the indeterminate progress bar.
      */
     private Timer indeterminateTimer;
 
     /**
-     *
-     */
-    public EDAProgressBar( ) {
-        this( 0, 100 );
-    }
-
-    /**
-     * @param minValue
-     * @param maxValue
-     */
-    public EDAProgressBar( int minValue, int maxValue ) {
-        this( "", minValue, maxValue );
-    }
-
-    /**
      * @param progressText
-     * @param minValue
-     * @param maxValue
      */
-    public EDAProgressBar( String progressText, int minValue, int maxValue ) {
+    public EDAProgressBar( String progressText ) {
         isStringPainted = true;
         isIndeterminate = false;
         paintedString = progressText;
-        this.minValue = minValue;
-        this.maxValue = maxValue;
     }
 
     /**
-     * @param newCurrent
+     * Sets the new current value;
+     * @param newValue The new current progress. Must be greater than or equal to zero
+     *                 or less than or equal to the width of the progress bar.
      */
-    public void setCurrentValue( int newCurrent ) {
-        if ( newCurrent > 100 || newCurrent < 0 ) {
-            throw new IllegalArgumentException( "Current value can not be greater than 100 or less than 0." );
+    public void setCurrentValue(int newValue) {
+        if (newValue < 0) {
+            newValue = 0;
+        } else if (newValue > getWidth()) {
+            newValue = getWidth() - 3; //Account for border width.
         }
-
-        currentValue = newCurrent;
-        drawFill( getGraphics( ) );
+        currentValue = newValue;
     }
-
     /**
+     * Sets the font of the text drawn on the progress bar when
+     * it is determinate. The default used is "Eurostile".
      * @param newFont
      */
     public void setForegroundFont( Font newFont ) {
@@ -122,13 +95,15 @@ public class EDAProgressBar extends JComponent {
     }
 
     /**
-     * @param newColor
+     * Sets the text color.
+     * @param newColor The new color.
      */
     public void setForegroundColor( Color newColor ) {
         foregroundColor = newColor;
     }
 
     /**
+     * Sets the color of the progress bar border.
      * @param newColor
      */
     public void setBorderColor( Color newColor ) {
@@ -137,6 +112,7 @@ public class EDAProgressBar extends JComponent {
     }
 
     /**
+     * Sets the color of the fill when the progress bar is indeterminate.
      * @param newColor
      */
     public void setProgressColor( Color newColor ) {
@@ -172,55 +148,7 @@ public class EDAProgressBar extends JComponent {
      */
     public void setIndeterminate( boolean isIndeterminate ) {
         this.isIndeterminate = isIndeterminate;
-
-        if ( isIndeterminate ) {
-            indeterminateTimer = new Timer( 0, new ActionListener( ) {
-                //Create offsets to account for the space taken up from the border.
-                int fillXStart = 3;
-                int fillYStart = 3;
-
-                int value = 0;
-                int maxValue = getWidth( ) - 5; //Accommodate for right border width
-                int lastValue;
-
-
-                /**
-                 *
-                 * @param e
-                 */
-                @Override
-                public void actionPerformed( ActionEvent e ) {
-                    Graphics g = getGraphics( );
-                    System.out.println( "Performing" );
-
-                    g.setColor( indeterminateProgressColor );
-
-                    if ( value != 0 ) {
-                        g.clearRect( fillXStart, fillYStart, lastValue, getHeight( ) - 6 );
-                    }
-
-                    g.fillRect( fillXStart, fillYStart, value, getHeight( ) - 6 );
-
-                    if ( value != maxValue ) {
-                        lastValue = value;
-                        value++;
-                    } else {
-                        g.clearRect( fillXStart, fillYStart, value, getHeight( ) - 6 );
-                        drawBorder( g );
-                        lastValue = 0;
-                        value = 0;
-                    }
-                }
-            } );
-
-            indeterminateTimer.setRepeats( true );
-            indeterminateTimer.setDelay( 10 );
-            indeterminateTimer.start( );
-        } else {
-            if ( indeterminateTimer.isRunning( ) ) {
-                indeterminateTimer.stop( );
-            }
-        }
+        repaint(  );
     }
 
     /**
@@ -228,10 +156,46 @@ public class EDAProgressBar extends JComponent {
      */
     @Override
     protected void paintComponent( Graphics g ) {
-        drawBackground( g );
-        drawBorder( g );
-        drawFill( g );
-        drawString( g );
+            drawBackground( g );
+            drawBorder( g );
+            drawString( g );
+
+            if (isIndeterminate) {
+                ActionListener actionListener;
+                indeterminateTimer = new Timer( 20, e -> {
+                    final int fillXStart = 3;
+                    final int fillYStart = 3;
+
+                    int currentValue = 0;
+                    int lastValue = 0;
+                    final int maxValue = getWidth() - 3;
+
+                    if (currentValue == maxValue) {
+                        g.clearRect( fillXStart, fillYStart, lastValue, getHeight() - 6 );
+                    }
+
+                    paintIndeterminate( g, currentValue, lastValue );
+
+                    currentValue++;
+                } );
+            } else {
+                drawFill( g );
+            }
+    }
+
+    /**
+     * Paints the fill for when the progress bar is set to indeterminate.
+     * @param g
+     */
+    private void paintIndeterminate(Graphics g, int value, int lastValue) {
+        //Create offsets to account for the space taken up from the border.
+        final int fillXStart = 3;
+        final int fillYStart = 3;
+
+        final int maxValue = getWidth( ) - 5; //Accommodate for right border width
+
+        g.setColor( indeterminateProgressColor );
+
     }
 
     /**
@@ -263,8 +227,8 @@ public class EDAProgressBar extends JComponent {
      */
     private void drawFill( Graphics g ) {
         //Create offsets to account for the space taken up from the border.
-        int fillXStart = 3;
-        int fillYStart = 3;
+        final int fillXStart = 3;
+        final int fillYStart = 3;
 
         if ( !isIndeterminate ) {
             g.setColor( progressColor );

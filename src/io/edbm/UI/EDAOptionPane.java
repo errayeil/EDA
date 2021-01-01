@@ -33,7 +33,7 @@ public class EDAOptionPane {
      * @param actionMessage The message displayed in the dialog.
      */
     public static JDialog showProgressDialog(Component parentComponent, String actionMessage) {
-        EDAProgressBar progress = new EDAProgressBar(  );
+        EDAProgressBar progress = new EDAProgressBar( "" );
         JDialog dialog = new JDialog() {
             @Override
             public void dispose( ) {
