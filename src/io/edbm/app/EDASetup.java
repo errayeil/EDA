@@ -6,10 +6,8 @@ import io.edbm.modules.NDM.NotificationManager;
 import io.sentry.Sentry;
 import io.sentry.protocol.SentryId;
 import io.sentry.protocol.User;
-import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.*;
 import java.net.MalformedURLException;
@@ -102,6 +100,11 @@ public class EDASetup {
      * File.separator is already added to improve readability.
      */
     private final String localFolder = File.separator + "Local";
+
+    /**
+     * The "Library" folder found on mac.;
+     */
+    private final String libraryFolder = File.separator + "Library";
     
     /**
      * Eda install folder.
@@ -176,7 +179,7 @@ public class EDASetup {
             defaultInstallLocation = userHomeFolder + appDataFolder + localFolder + edaFolder; //File.Separator included in strings above
             Sentry.addBreadcrumb( "DefaultInstallLocation for Windows Determined." );
         } else if ( Utils.isMac() ) {
-            //TODO
+            defaultInstallLocation = libraryFolder + edaFolder;
             Sentry.addBreadcrumb( "DefaultInstallLocation for OSX Determined." );
         } else if ( Utils.isLinux() ) {
             //TODO
@@ -191,9 +194,11 @@ public class EDASetup {
         boolean success = registerEurostileFont();
     
         if ( success ) {
+            System.out.println( "Eurostile font successfully registered" );
             Sentry.addBreadcrumb( "Eurostile font successfully registered." );
         } else {
             Sentry.addBreadcrumb( "Eurostile font was not successfully registered." );
+            System.out.println( "Eurostile font was not successfully registered." );
         }
         
     }
@@ -338,30 +343,15 @@ public class EDASetup {
                                                            JOptionPane.QUESTION_MESSAGE, null, null, null );
                 if (option2 == JOptionPane.YES_OPTION) {
                     JFileChooser chooser = new JFileChooser();
-                    
-                    chooser.setFileFilter( new FileFilter() {
-                        @Override
-                        public boolean accept ( File f ) {
-                            
-                            if (f.isDirectory()) {
-                                return true;
-                            }
-                            
-                            return false;
-                        }
-    
-                        @Override
-                        public String getDescription () {
-                            return null;
-                        }
-                    } );
+
+                    chooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
                     
                     int chooserOption = chooser.showOpenDialog( null );
                     
                     if (chooserOption == JFileChooser.APPROVE_OPTION) {
                         File selected = chooser.getSelectedFile();
                         setInstallLocation( selected.getAbsolutePath() );
-                    } else {
+                    } else if (chooserOption == JFileChooser.CANCEL_OPTION) {
                         setInstallLocation( defaultInstallLocation );
                     }
                     
@@ -388,10 +378,15 @@ public class EDASetup {
                         boolean success = downloadAssets();
                         if (success) {
                             Utils.invokeSetVisibleDialog( dDialog, false );
+                            dDialog.dispose();
+
                             if (hasDownloadedAssetsInFolder()) {
                                 JDialog dialog = EDAOptionPane.showProgressDialog( null, "Downloading" );
                                 boolean extracted = extractAssets();
+
                                 Utils.invokeSetVisibleDialog( dialog, false );
+                                dialog.dispose();
+
                                 if (!extracted) {
                                     JOptionPane.showMessageDialog( null, "We had an issue extracting the assets. EDA will now Exit." );
                                 }
@@ -431,39 +426,43 @@ public class EDASetup {
      * for testing.
      */
     public void clearEverythingForTesting () {
-        try {
-            FileUtils.deleteDirectory( new File( defaultInstallLocation ) );
-        } catch ( IOException e ) {
-            e.printStackTrace();
-            SentryId id = Sentry.captureException( e );
-            NotificationManager.captureUserFeedback( id );
-        }
-        
-        if ( hasAssetsExtracted() ) {
-            String javaPath = Utils.getJavaPath();
-            System.out.println(javaPath);
-            File binDirectory = new File( Utils.getJavaPath() + javaPathBinFolder );
-            
-            if ( binDirectory.exists() ) {
-                List<String> assetNames = getAssetNamesForPlatform();
-                File[] binFiles = binDirectory.listFiles();
-                
-                if ( binFiles != null ) {
-                    for ( File f : binFiles ) {
-                        String name = f.getName();
-            
-                        for ( String as : assetNames ) {
-                            if ( as.equals( name ) ) {
-                                boolean success = f.delete();
-                                if ( ! success ) {
-                                    Sentry.captureMessage( "File could not be deleted: " + f.getAbsolutePath() );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//        try {
+//            FileUtils.deleteDirectory( new File( defaultInstallLocation ) );
+//        } catch ( IOException e ) {
+//            e.printStackTrace();
+//            SentryId id = Sentry.captureException( e );
+//            NotificationManager.captureUserFeedback( id );
+//        }
+//
+//        System.out.println("If directory existed, it has been deleted.");
+//
+//        if ( hasAssetsExtracted() ) {
+//            System.out.println( "Extracted assets detected." );
+//            String javaPath = Utils.getJavaPath();
+//            System.out.println(javaPath);
+//            File binDirectory = new File( Utils.getJavaPath() + javaPathBinFolder );
+//
+//            if ( binDirectory.exists() ) {
+//                System.out.println( "Bin directory exists" );
+//                List<String> assetNames = getAssetNamesForPlatform();
+//                File[] binFiles = binDirectory.listFiles();
+//
+//                if ( binFiles != null ) {
+//                    for ( File f : binFiles ) {
+//                        String name = f.getName();
+//
+//                        for ( String as : assetNames ) {
+//                            if ( as.equals( name ) ) {
+//                                boolean success = f.delete();
+//                                if ( ! success ) {
+//                                    Sentry.captureMessage( "File could not be deleted: " + f.getAbsolutePath() );
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         try {
             prefs.clear();
@@ -478,6 +477,7 @@ public class EDASetup {
      *
      */
     public void putPermissionsForTesting () {
+        System.out.println( "Putting permissions." );
         prefs.putBoolean( downloadUpdatesKey , true );
         prefs.putBoolean( downloadAssetsKey , true );
         prefs.putBoolean( installUpdatesKey , true );
