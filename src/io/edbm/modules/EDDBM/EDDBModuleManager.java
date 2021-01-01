@@ -1,6 +1,6 @@
 package io.edbm.modules.EDDBM;
 
-import io.edbm.UI.EDAModulePanel;
+import io.edbm.UI.Component.EDAModulePanel;
 
 /**
  * @author Steven Frizell

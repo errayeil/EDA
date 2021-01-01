@@ -1,8 +1,8 @@
 package io.edbm.modules.EDDBM.UI;
 
-import io.edbm.UI.EDAButton;
-import io.edbm.UI.EDASearchBox;
-import io.edbm.UI.EDATable;
+import io.edbm.UI.Component.EDAButton;
+import io.edbm.UI.Component.EDASearchBox;
+import io.edbm.UI.Component.EDATable;
 import io.edbm.modules.EDDBM.EDDBSearch;
 
 import javax.swing.*;

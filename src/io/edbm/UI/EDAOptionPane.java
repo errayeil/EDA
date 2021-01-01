@@ -1,5 +1,10 @@
 package io.edbm.UI;
 
+import io.edbm.UI.Component.EDAProgressBar;
+import io.edbm.UI.LAF.EDAThemeColors;
+import io.edbm.UI.Windows.EDABorder;
+import io.edbm.UI.Windows.EDAPane;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -36,7 +41,7 @@ public class EDAOptionPane {
             }
         };
 
-        EDABackgroundContainer container = new EDABackgroundContainer();
+        EDAPane container = new EDAPane();
         JLabel label = new JLabel(actionMessage);
 
         label.setFont( new Font("Eurostile", Font.PLAIN, 16) );
@@ -59,6 +64,7 @@ public class EDAOptionPane {
         dialog.setSize( new Dimension(400, 100) );
 
         container.setLayout( null );
+        container.setBorder( new EDABorder() );
         container.add( progress );
         container.add( label );
 
@@ -69,36 +75,6 @@ public class EDAOptionPane {
         dialog.setLocationRelativeTo( null );
         dialog.pack();
 
-        EDARectangle left = new EDARectangle();
-        EDARectangle right = new EDARectangle();
-        EDARectangle top = new EDARectangle();
-        EDARectangle bottom = new EDARectangle();
-
-        left.setColor( EDAThemeColors.EG_7 );
-        left.x = 0;
-        left.y = 0;
-        left.width = 3;
-        left.height = dialog.getHeight();
-        right.setColor( EDAThemeColors.EG_7 );
-        right.x = dialog.getWidth() - 3;
-        right.y = 0;
-        right.width = 3;
-        right.height = dialog.getHeight();
-        top.setColor( EDAThemeColors.EG_7 );
-        top.x = 0;
-        top.y = 0;
-        top.width = dialog.getWidth();
-        top.height = 3;
-        bottom.setColor( EDAThemeColors.EG_7 );
-        bottom.x = 0;
-        bottom.y = dialog.getHeight() - 3;
-        bottom.width = dialog.getWidth();
-        bottom.height = 3;
-
-        container.addBorder( left );
-        container.addBorder( right );
-        container.addBorder( top );
-        container.addBorder( bottom );
     
         SwingUtilities.invokeLater( () -> {
             dialog.setVisible( true );

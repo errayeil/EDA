@@ -104,7 +104,7 @@ public class Utils {
      * @return
      */
     public static boolean isMac() {
-        return getSystemOS().contains( "mac" );
+        return getSystemOS().contains( "Mac" );
     }
     
     /**

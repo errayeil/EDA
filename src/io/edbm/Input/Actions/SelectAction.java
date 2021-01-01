@@ -1,10 +1,10 @@
 package io.edbm.Input.Actions;
 
-import io.edbm.UI.EDAWindow;
+import io.edbm.UI.Windows.EDADialog;
 
 public class SelectAction implements ActionImpl {
     
-    public SelectAction( EDAWindow appWindow ) {
+    public SelectAction( EDADialog appWindow ) {
     
     }
     

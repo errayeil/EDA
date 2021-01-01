@@ -1,4 +1,4 @@
-package io.edbm.UI;
+package io.edbm.UI.LAF;
 
 import java.awt.Color;
 

@@ -1,4 +1,7 @@
-package io.edbm.UI;
+package io.edbm.UI.Windows;
+
+import io.edbm.UI.Component.EDAList;
+import io.edbm.UI.Component.EDAScrollPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +22,7 @@ public class EDAOptionsDialog extends JDialog {
     /**
      * The content pane of the results dialog.
      */
-    private EDABackgroundContainer dialogPanel;
+    private EDAPane dialogPanel;
 
     /**
      * The list of results to display in the dialog.
@@ -49,7 +52,7 @@ public class EDAOptionsDialog extends JDialog {
      */
     public EDAOptionsDialog( Component parent) {
         this.parent = parent;
-        this.dialogPanel = new EDABackgroundContainer(  );
+        this.dialogPanel = new EDAPane(  );
         ableToPopulate = true;
     }
 
@@ -59,7 +62,7 @@ public class EDAOptionsDialog extends JDialog {
      */
     public EDAOptionsDialog( Component parent, List<String> defaultOptions) {
         this.parent = parent;
-        this.dialogPanel = new EDABackgroundContainer(  );
+        this.dialogPanel = new EDAPane(  );
         this.defaultOptions = defaultOptions;
         this.ableToPopulate = false;
 

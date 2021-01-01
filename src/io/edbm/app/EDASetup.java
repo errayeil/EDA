@@ -180,6 +180,7 @@ public class EDASetup {
             Sentry.addBreadcrumb( "DefaultInstallLocation for Windows Determined." );
         } else if ( Utils.isMac() ) {
             defaultInstallLocation = libraryFolder + edaFolder;
+            System.out.println( "DefaultInstallLocation for OSX Determined." );
             Sentry.addBreadcrumb( "DefaultInstallLocation for OSX Determined." );
         } else if ( Utils.isLinux() ) {
             //TODO
@@ -350,8 +351,10 @@ public class EDASetup {
                     
                     if (chooserOption == JFileChooser.APPROVE_OPTION) {
                         File selected = chooser.getSelectedFile();
+                        System.out.println( selected.getAbsolutePath() );
                         setInstallLocation( selected.getAbsolutePath() );
                     } else if (chooserOption == JFileChooser.CANCEL_OPTION) {
+                        System.out.println( defaultInstallLocation );
                         setInstallLocation( defaultInstallLocation );
                     }
                     

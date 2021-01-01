@@ -1,6 +1,6 @@
 package io.edbm.Input.Actions;
 
-import io.edbm.UI.EDAWindow;
+import io.edbm.UI.Windows.EDADialog;
 import javax.swing.SwingUtilities;
 
 public class WindowVisibilityAction implements ActionImpl {
@@ -8,13 +8,13 @@ public class WindowVisibilityAction implements ActionImpl {
     /**
      *
      */
-    private EDAWindow appWindow;
+    private EDADialog appWindow;
     
     /**
      *
      * @param appWindow
      */
-    public WindowVisibilityAction ( EDAWindow appWindow ) {
+    public WindowVisibilityAction ( EDADialog appWindow ) {
         this.appWindow = appWindow;
     }
     

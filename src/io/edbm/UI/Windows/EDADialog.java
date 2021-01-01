@@ -1,5 +1,9 @@
-package io.edbm.UI;
+package io.edbm.UI.Windows;
 
+import io.edbm.UI.Component.EDAButton;
+import io.edbm.UI.Component.EDAModulePanel;
+import io.edbm.UI.Event.EDAButtonEvent;
+import io.edbm.UI.Event.EDAButtonListener;
 import io.edbm.modules.EDDBM.UI.EDDBMSystemsPanel;
 
 import javax.swing.*;
@@ -14,7 +18,7 @@ import java.util.Map;
  * @version HIP 2
  * @since HIP 2
  */
-public class EDAWindow extends JDialog implements EDAButtonListener {
+public class EDADialog extends JDialog implements EDAButtonListener {
 
     /**
      *
@@ -65,7 +69,7 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
      * Button to select the EDDB Query module.
      */
     private EDAButton EDDBMButton;
-    
+
     /**
      *
      */
@@ -74,7 +78,7 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
     /**
      * The panel that displays the UI background graphics.
      */
-    private EDABackgroundContainer windowPanel;
+    private EDAPane windowPanel;
 
     /**
      * Easily retrieve module panels assigned to its EDAButton.
@@ -86,8 +90,8 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
     /**
      *
      */
-    public EDAWindow( ) {
-        windowPanel = new EDABackgroundContainer();
+    public EDADialog( ) {
+        windowPanel = new EDAPane( );
         setUndecorated( true );
         setBackground( new Color( 0, 0, 0, 200 ) );
         setContentPane( windowPanel );
@@ -95,11 +99,11 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         setModal( true );
         setLayout( null );
     }
-    
+
     /**
      *
      */
-    public void initButtons() {
+    public void initButtons( ) {
         HMButton = new EDAButton( "", 40, 40 );
         BBMMButton = new EDAButton( "BMM" );
         EMTMButton = new EDAButton( "MTM" );
@@ -112,8 +116,8 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
 
         modulePanels = new HashMap<>( );
 
-        
-        HMButton.setImageIcon( new ImageIcon(EDAWindow.class.getResource( "/io/edbm/resources/home24p.png" )) );
+
+        HMButton.setImageIcon( new ImageIcon( EDADialog.class.getResource( "/io/edbm/resources/home24p.png" ) ) );
         HMButton.setSecondaryText( "" );
         BBMMButton.setSecondaryText( "Bookmark management" );
         EMTMButton.setSecondaryText( "Material tracker" );
@@ -123,7 +127,7 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         WPVMButton.setSecondaryText( "Web page viewer" );
         EDDBMButton.setSecondaryText( "Elite: Dangerous Database" );
         NDMButton.setSecondaryText( "" );
-        NDMButton.setImageIcon( new ImageIcon(EDAWindow.class.getResource( "/io/edbm/resources/nonotif24p.png" )) );
+        NDMButton.setImageIcon( new ImageIcon( EDADialog.class.getResource( "/io/edbm/resources/nonotif24p.png" ) ) );
 
         HMButton.setIndex( 0 );
         BBMMButton.setIndex( 1 );
@@ -135,14 +139,14 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         EDDBMButton.setIndex( 7 );
         NDMButton.setIndex( 8 );
 
-//        HMButton.addButtonListener( this );
-//        BBMMButton.addButtonListener( this );
-//        EMTMButton.addButtonListener( this );
-//        NSSMButton.addButtonListener( this );
-//        GMMButton.addButtonListener( this );
-//        SYMButton.addButtonListener( this );
-//        WPVMButton.addButtonListener( this );
-//        EDDBMButton.addButtonListener( this );
+        HMButton.addButtonListener( this );
+        BBMMButton.addButtonListener( this );
+        EMTMButton.addButtonListener( this );
+        NSSMButton.addButtonListener( this );
+        GMMButton.addButtonListener( this );
+        SYMButton.addButtonListener( this );
+        WPVMButton.addButtonListener( this );
+        EDDBMButton.addButtonListener( this );
 
         selected = HMButton;
 
@@ -168,19 +172,19 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
         EDDBMButton.setLocation( 988, 9 );
         NDMButton.setLocation( 988 + 156, 9 );
 
-        initModulePanels();
+        //initModulePanels( );
     }
 
-    public boolean isReady() {
+    public boolean isReady( ) {
         return isReady;
     }
 
     /**
      *
      */
-    private void initModulePanels() {
+    private void initModulePanels( ) {
         EDAModulePanel eddbModulePanel = new EDAModulePanel( 1150, 600 );
-        EDDBMSystemsPanel eddbPanel = new EDDBMSystemsPanel(1150, 600);
+        EDDBMSystemsPanel eddbPanel = new EDDBMSystemsPanel( 1150, 600 );
 
         modulePanels.put( EDDBMButton, eddbModulePanel );
 
@@ -255,47 +259,47 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
     /**
      * Switches the currently displayed panel to the new one.
      */
-    private void switchPanel( EDABackgroundContainer panelToDisplay ) {
+    private void switchPanel( EDAPane panelToDisplay ) {
 
     }
 
     /**
      * Unselects any selected buttons.
      */
-    private void unselectButton( EDAButton selected) {
+    private void unselectButton( EDAButton selected ) {
 
-        selectedIndex = selected.getIndex();
+        selectedIndex = selected.getIndex( );
 
-        if ( HMButton.isSelected( )) {
-            if (HMButton.getIndex() != selectedIndex) {
+        if ( HMButton.isSelected( ) ) {
+            if ( HMButton.getIndex( ) != selectedIndex ) {
                 HMButton.setSelected( false );
             }
         } else if ( BBMMButton.isSelected( ) ) {
-            if (BBMMButton.getIndex() != selectedIndex) {
+            if ( BBMMButton.getIndex( ) != selectedIndex ) {
                 BBMMButton.setSelected( false );
             }
         } else if ( EMTMButton.isSelected( ) ) {
-            if (EMTMButton.getIndex() != selectedIndex) {
+            if ( EMTMButton.getIndex( ) != selectedIndex ) {
                 EMTMButton.setSelected( false );
             }
         } else if ( NSSMButton.isSelected( ) ) {
-            if (NSSMButton.getIndex() != selectedIndex) {
+            if ( NSSMButton.getIndex( ) != selectedIndex ) {
                 NSSMButton.setSelected( false );
             }
         } else if ( GMMButton.isSelected( ) ) {
-            if (GMMButton.getIndex() != selectedIndex) {
+            if ( GMMButton.getIndex( ) != selectedIndex ) {
                 GMMButton.setSelected( false );
             }
         } else if ( SYMButton.isSelected( ) ) {
-            if (SYMButton.getIndex() != selectedIndex) {
+            if ( SYMButton.getIndex( ) != selectedIndex ) {
                 SYMButton.setSelected( false );
             }
         } else if ( WPVMButton.isSelected( ) ) {
-            if (WPVMButton.getIndex() != selectedIndex) {
+            if ( WPVMButton.getIndex( ) != selectedIndex ) {
                 WPVMButton.setSelected( false );
             }
         } else if ( EDDBMButton.isSelected( ) ) {
-            if (EDDBMButton.getIndex() != selectedIndex) {
+            if ( EDDBMButton.getIndex( ) != selectedIndex ) {
                 EDDBMButton.setSelected( false );
             }
         }
@@ -303,12 +307,12 @@ public class EDAWindow extends JDialog implements EDAButtonListener {
 
     @Override
     public void buttonClicked( EDAButtonEvent event ) {
-        unselectButton( event.getSource() );
-        int index = event.getSource().getIndex();
+        unselectButton( event.getSource( ) );
+        int index = event.getSource( ).getIndex( );
 
-        switch (index) {
+        switch ( index ) {
             case 7:
-                modulePanels.get( event.getSource() ).setVisible( true );
+                modulePanels.get( event.getSource( ) ).setVisible( true );
                 break;
         }
     }

@@ -1,4 +1,8 @@
-package io.edbm.UI;
+package io.edbm.UI.Component;
+
+import io.edbm.UI.LAF.EDAThemeColors;
+import io.edbm.UI.Event.EDAButtonEvent;
+import io.edbm.UI.Event.EDAButtonListener;
 
 import javax.swing.*;
 import java.awt.*;

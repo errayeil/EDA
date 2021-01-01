@@ -1,7 +1,6 @@
 package io.edbm.UI.LAF;
 
-import io.edbm.UI.EDAButton;
-import io.edbm.UI.EDAThemeColors;
+import io.edbm.UI.Component.EDAButton;
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;

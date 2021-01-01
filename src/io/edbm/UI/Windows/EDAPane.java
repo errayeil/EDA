@@ -1,20 +1,29 @@
-package io.edbm.UI;
+package io.edbm.UI.Windows;
+
+import io.edbm.UI.LAF.EDARectangle;
+import io.edbm.UI.LAF.EDAThemeColors;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Creates the Panel that has a similar design to the Elite Dangerous panels.
+ * Creates the background pane used for EDADialogs to provide a
+ * similar UI experience like the in game UI's.
  *
  * @author Steven Frizell
  * @version 1.0
  * @since 1.0
  */
-public class EDABackgroundContainer extends JPanel {
+public class EDAPane extends JPanel {
 
     /**
-     *
+     * The border of the content pane.
+     */
+    private EDABorder border;
+
+    /**
+     * The color used when painting the background of the pane.
      */
     private Color backgroundColor = EDAThemeColors.WINDOW_BACKGROUND;
 
@@ -40,15 +49,9 @@ public class EDABackgroundContainer extends JPanel {
     private boolean paintSeparators = true;
 
     /**
-     *
+     * The alpha value used when painting the background of the pane.
      */
     private float backgroundAlpha = 1.0f;
-
-    /**
-     * TODO: Populate list to add more borders, such as left or right.
-     * Should be used for the ends of the panel.
-     */
-    java.util.List< EDARectangle > borders = new ArrayList<>( );
 
     /**
      * TODO: Populate list to add more separators to the panel.
@@ -59,17 +62,19 @@ public class EDABackgroundContainer extends JPanel {
     /**
      * Constructor.
      */
-    public EDABackgroundContainer( ) {
+    public EDAPane( ) {
         setOpaque( false );
         setLayout( null );
     }
 
     /**
-     * Adds a separator to be painted for the border.
-     * @param separator
+     * Sets the border to be used.
+     * @param border
      */
-    public void addBorder( EDARectangle separator) {
-        borders.add( separator );
+    public void setBorder( EDABorder border) {
+        border.setWidthHeightFromParent( getWidth(), getHeight() );
+        this.border = border;
+        repaint(  );
     }
 
     /**
@@ -200,9 +205,36 @@ public class EDABackgroundContainer extends JPanel {
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
 
-        for ( EDARectangle sep : borders) {
-            g2d.setColor( sep.getColor() );
-            g2d.fillRect( sep.x, sep.y, sep.width, sep.height );
+        g2d.setColor(border.topBorder.color);
+
+        if (border.topBorder.shouldFill) {
+            g2d.fillRect( border.topBorder.x, border.topBorder.y, border.topBorder.width, border.topBorder.height );
+        } else {
+            g2d.drawRect( border.topBorder.x, border.topBorder.y, border.topBorder.width, border.topBorder.height );
+        }
+
+        g2d.setColor( border.rightBorder.color );
+
+        if (border.rightBorder.shouldFill) {
+            g2d.fillRect( border.rightBorder.x, border.rightBorder.y, border.rightBorder.width, border.rightBorder.height );
+        } else {
+            g2d.drawRect( border.rightBorder.x, border.rightBorder.y, border.rightBorder.width, border.rightBorder.height );
+        }
+
+        g2d.setColor(border.bottomBorder.color);
+
+        if (border.bottomBorder.shouldFill) {
+            g2d.fillRect( border.bottomBorder.x, border.bottomBorder.y, border.bottomBorder.width, border.bottomBorder.height );
+        } else {
+            g2d.drawRect( border.bottomBorder.x, border.bottomBorder.y, border.bottomBorder.width, border.bottomBorder.height );
+        }
+
+        g2d.setColor(border.leftBorder.color);
+
+        if (border.leftBorder.shouldFill) {
+            g2d.fillRect( border.leftBorder.x, border.leftBorder.y, border.leftBorder.width, border.leftBorder.height );
+        } else {
+            g2d.drawRect( border.leftBorder.x, border.leftBorder.y, border.leftBorder.width, border.leftBorder.height );
         }
     }
 

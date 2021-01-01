@@ -1,4 +1,6 @@
-package io.edbm.UI;
+package io.edbm.UI.Component;
+
+import io.edbm.UI.LAF.EDAThemeColors;
 
 import javax.swing.*;
 import java.awt.*;

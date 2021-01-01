@@ -3,7 +3,9 @@ package io.edbm.app;
 import io.edbm.Input.ActionDispatcher;
 import io.edbm.Input.Controller.ControllerPollerManager;
 import io.edbm.Input.Keyboard.NativeHook;
-import io.edbm.UI.EDAWindow;
+import io.edbm.UI.EDAOptionPane;
+import io.edbm.UI.Windows.EDADialog;
+import io.edbm.Utilities.Utils;
 import io.edbm.modules.NDM.NotificationManager;
 import io.sentry.Sentry;
 import io.sentry.protocol.SentryId;
@@ -23,7 +25,7 @@ public class RunEDA {
     /**
      * The primary window of the application.
      */
-    private EDAWindow appWindow;
+    private EDADialog appWindow;
     
     /**
      * Detects controller (including mouse and keyboard) events.
@@ -61,11 +63,13 @@ public class RunEDA {
      *
      */
     private void init () {
-        setup.putPermissionsForTesting();
-        setup.clearEverythingForTesting();
-        setup.putPermissionsForTesting();
+        EDAOptionPane.showProgressDialog( null, "Testing dialog." );
+        System.out.println( Utils.getSystemOS());
+        //setup.putPermissionsForTesting();
+        //setup.clearEverythingForTesting();
+        //setup.putPermissionsForTesting();
 
-        setup.startFirstTimeSetup();
+        //setup.startFirstTimeSetup();
 //
 //        appWindow = new EDAWindow();
 //        actionDispatcher = new ActionDispatcher( appWindow );

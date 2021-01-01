@@ -13,10 +13,10 @@ import io.edbm.Input.Controller.ControllerPollerManager;
 import io.edbm.Input.Controller.ControllerStateEvent;
 import io.edbm.Input.Controller.ControllerStateListener;
 import io.edbm.Input.Keyboard.NativeKeyListener;
-import io.edbm.UI.EDAWindow;
+import io.edbm.UI.Windows.EDADialog;
 import io.edbm.Utilities.InputUtils;
 import io.edbm.Utilities.InputUtils.POVDirection;
-import io.sentry.Sentry;
+
 import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -48,7 +48,7 @@ public class ActionDispatcher implements ControllerInputListener,
     /**
      *
      */
-    private volatile EDAWindow appWindow;
+    private volatile EDADialog appWindow;
     
     /**
      *
@@ -83,7 +83,7 @@ public class ActionDispatcher implements ControllerInputListener,
     /**
      *
      */
-    public ActionDispatcher ( final EDAWindow window) {
+    public ActionDispatcher ( final EDADialog window) {
         
         
         this.appWindow = window;

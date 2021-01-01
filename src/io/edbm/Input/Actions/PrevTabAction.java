@@ -1,18 +1,18 @@
 package io.edbm.Input.Actions;
 
-import io.edbm.UI.EDAWindow;
+import io.edbm.UI.Windows.EDADialog;
 
 public class PrevTabAction implements ActionImpl {
     
     public String actionName = "prevTab";
     
-    private EDAWindow appWindow;
+    private EDADialog appWindow;
     
     /**
      *
      * @param appWindow
      */
-    public PrevTabAction( EDAWindow appWindow ) {
+    public PrevTabAction( EDADialog appWindow ) {
         this.appWindow = appWindow;
     }
     

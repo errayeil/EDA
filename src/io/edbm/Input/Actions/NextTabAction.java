@@ -1,6 +1,6 @@
 package io.edbm.Input.Actions;
 
-import io.edbm.UI.EDAWindow;
+import io.edbm.UI.Windows.EDADialog;
 import net.java.games.input.Controller;
 
 /**
@@ -13,7 +13,7 @@ public class NextTabAction implements ActionImpl {
     /**
      *
      */
-    private final EDAWindow appWindow;
+    private final EDADialog appWindow;
     
     /**
      *
@@ -29,7 +29,7 @@ public class NextTabAction implements ActionImpl {
      *
      * @param appWindow
      */
-    public NextTabAction( EDAWindow appWindow ) {
+    public NextTabAction( EDADialog appWindow ) {
         this.appWindow = appWindow;
     }
     

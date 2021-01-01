@@ -1,6 +1,7 @@
 package io.edbm.modules.EDDBM.UI;
 
-import io.edbm.UI.*;
+import io.edbm.UI.Component.EDAButton;
+import io.edbm.UI.Component.EDASearchBox;
 
 /**
  * Panel providing the ability to query EDDB for celestial body information.

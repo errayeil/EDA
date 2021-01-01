@@ -1,4 +1,4 @@
-package io.edbm.UI;
+package io.edbm.UI.Component;
 
 import javax.swing.*;
 

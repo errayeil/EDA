@@ -1,6 +1,6 @@
 package io.edbm.app;
 
-import io.edbm.UI.EDAProgressBar;
+import io.edbm.UI.Component.EDAProgressBar;
 import io.edbm.Utilities.Utils;
 
 import javax.swing.*;
